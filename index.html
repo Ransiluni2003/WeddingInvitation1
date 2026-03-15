@@ -460,11 +460,11 @@
      Fixed position, always visible
   =========================== */
   #music-widget {
-    position: fixed;
+    position: absolute;
     bottom: 20px;
     right: 20px;
-    z-index: 99999 !important;
-    display: block !important;
+    z-index: 99999;
+    display: block;
   }
 
   #musicBtn {
@@ -483,9 +483,7 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     transition: all 0.2s ease;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
+    display: block;
     box-shadow: 0 4px 12px rgba(30, 74, 16, 0.4);
   }
   
@@ -502,10 +500,6 @@
   #musicBtn.playing {
     background: #5a9b3c;
     border-color: #5a9b3c;
-  }
-
-  .music-icon {
-    display: inline;
   }
 
   /* Volume panel (shows on hover/long-press) */
@@ -678,6 +672,11 @@
       ✦ &nbsp;Tap to Open
     </button>
   </div>
+
+  <!-- Music Button - Always on Top -->
+  <div id="music-widget">
+    <button id="musicBtn" aria-label="Toggle Music">MUSIC</button>
+  </div>
 </div>
 
 <!-- ===== INVITATION PAGE ===== -->
@@ -809,15 +808,6 @@
 <audio id="bgMusic" loop>
   <source src="paulyudin-wedding-485932 (1).mp3" type="audio/mpeg">
 </audio>
-
-<!-- ===========================
-     MUSIC WIDGET — SIMPLE BUTTON
-============================ -->
-<div id="music-widget">
-  <button id="musicBtn" aria-label="Toggle Music">
-    MUSIC
-  </button>
-</div>
 
 <script>
 (function() {
