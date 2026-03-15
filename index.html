@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
+<meta name="theme-color" content="#f6fbf4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -23,7 +26,7 @@
 
   html { height: 100%; -webkit-text-size-adjust: 100%; -webkit-user-select: none; user-select: none; }
   body {
-    height: 100%;
+    height: 100vh;
     font-family: "Lato", sans-serif;
     background: #000;
     overflow: hidden;
@@ -32,6 +35,10 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
   }
   body.invitation-open {
     overflow: hidden; /* Keep hidden — we scroll #invitation instead */
@@ -167,7 +174,13 @@
   /* ===== INVITATION PAGE ===== */
   #invitation {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
     /* Use overflow-y scroll with momentum on iOS */
     overflow-y: scroll;
     overflow-x: hidden;
@@ -181,8 +194,9 @@
     background: var(--cream);
     -webkit-user-select: text;
     user-select: text;
-    touch-action: manipulation;
+    touch-action: pan-down pan-up;
     -webkit-touch-callout: default;
+    will-change: transform, opacity;
   }
   #invitation.show {
     opacity: 1;
@@ -936,6 +950,16 @@
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
+    
+    // iOS scroll fix - enable scrolling on invitation container
+    setTimeout(() => {
+      inv.scrollTop = 0;
+      // Force scroll position update on iOS
+      if (inv.scrollHeight > inv.clientHeight) {
+        inv.style.overflow = 'auto';
+      }
+    }, 100);
+    
     initParticles();
     tryPlayMusic();
   }
@@ -1094,6 +1118,28 @@
       window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');
     }, false);
   }
+
+  /* ── iOS SCROLL FIX ── */
+  const inv = document.getElementById('invitation');
+  // Handle iOS overflow and scroll enabling
+  inv.addEventListener('touchmove', function(e) {
+    // Allow touch scrolling
+    if (inv.scrollHeight > inv.clientHeight) {
+      e.stopPropagation();
+    }
+  }, { passive: true });
+
+  // Fix for iOS Safari scroll position
+  inv.addEventListener('scroll', function() {
+    // Trigger reflow to ensure smooth scrolling
+  }, { passive: true });
+
+  // Ensure scroll works on iOS when showing invitation
+  window.addEventListener('load', function() {
+    if (inv.classList.contains('show')) {
+      inv.scrollTop = 0;
+    }
+  });
 })();
 </script>
 </body>
