@@ -2,10 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
-<meta name="theme-color" content="#f6fbf4">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
@@ -26,7 +23,7 @@
 
   html { height: 100%; -webkit-text-size-adjust: 100%; -webkit-user-select: none; user-select: none; }
   body {
-    height: 100vh;
+    height: 100%;
     font-family: "Lato", sans-serif;
     background: #000;
     overflow: hidden;
@@ -35,10 +32,6 @@
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
   }
   body.invitation-open {
     overflow: hidden; /* Keep hidden — we scroll #invitation instead */
@@ -174,18 +167,11 @@
   /* ===== INVITATION PAGE ===== */
   #invitation {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh;
+    inset: 0;
     /* Use overflow-y scroll with momentum on iOS */
     overflow-y: scroll;
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: auto;
+    overscroll-behavior-y: contain;
     z-index: 50;
     opacity: 0;
     pointer-events: none;
@@ -194,20 +180,13 @@
     background: var(--cream);
     -webkit-user-select: text;
     user-select: text;
-    touch-action: none;
-    -webkit-touch-callout: default;
-    will-change: transform, opacity;
-    scroll-behavior: smooth;
   }
   #invitation.show {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: all;
     transform: translateY(0);
     /* Pad bottom for iPhone home indicator */
     padding-bottom: var(--safe-bottom);
-  }
-  #invitation.show * {
-    pointer-events: auto;
   }
 
   /* Particles */
@@ -231,8 +210,6 @@
     /* Extra bottom padding for iPhone home bar */
     padding-bottom: calc(clamp(2rem, 6vw, 5rem) + 100px + var(--safe-bottom));
     position: relative;
-    box-sizing: border-box;
-    width: 100%;
   }
   .inv-page::before {
     content: "";
@@ -448,17 +425,6 @@
     box-shadow: 0 12px 48px rgba(30,74,16,0.22);
     border: 2px solid rgba(201,168,76,0.3);
     background: #000;
-    width: 100%;
-    max-width: 100%;
-    pointer-events: none;
-    touch-action: none;
-  }
-  .video-frame video {
-    pointer-events: none;
-    touch-action: none;
-    display: block;
-    width: 100%;
-    height: auto;
   }
   .map-embed {
     border: 0;
@@ -466,9 +432,6 @@
     width: 100%;
     height: 250px;
     margin-top: 12px;
-    display: block;
-    pointer-events: none;
-    touch-action: none;
   }
   .gm-address {
     margin-top: 0.6rem;
@@ -874,13 +837,13 @@
         <div class="video-frame">
           <video
             id="story-video"
-            src="video.mp4"
+            src="vedio.mp4"
             muted
             loop
             playsinline
             webkit-playsinline
-            preload="metadata"
-            style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;-webkit-user-select:none;user-select:none;background:#000;">
+            preload="auto"
+            style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;-webkit-user-select:none;user-select:none;">
           </video>
         </div>
       </section>
@@ -908,14 +871,9 @@
         <p class="gm-address">Kudawaskaduwa, Waskaduwa, Kalutara</p>
         <iframe
           class="map-embed"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.4596437589676!2d79.96397!3d6.3702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae213ea453a5555%3A0x0!2sThurya%20Hotel!5e0!3m2!1sen!2slk!4v1710530000000"
-          width="100%"
-          height="250"
-          style="border:0;border-radius:10px;display:block;margin-top:12px;"
-          allowfullscreen=""
-          loading="eager"
+          src="https://www.google.com/maps?q=Thurya+Hotel+Kalutara&output=embed"
+          loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox"
           title="Thurya Hotel location map"></iframe>
       </section>
 
@@ -961,12 +919,6 @@
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
-    
-    // Reset scroll position for clean start
-    setTimeout(() => {
-      inv.scrollTop = 0;
-    }, 50);
-    
     initParticles();
     tryPlayMusic();
   }
@@ -1116,33 +1068,6 @@
     obs.observe(storyVideo);
   }
 
-  /* Enable pointer events on video/map when user tries to interact */
-  const videoFrame = document.querySelector('.video-frame');
-  const mapEmbed = document.querySelector('.map-embed');
-  const inv = document.getElementById('invitation');
-
-  if (videoFrame) {
-    videoFrame.addEventListener('touchstart', function(e) {
-      videoFrame.style.pointerEvents = 'auto';
-    }, { passive: true });
-    videoFrame.addEventListener('touchend', function() {
-      setTimeout(() => {
-        videoFrame.style.pointerEvents = 'none';
-      }, 100);
-    }, { passive: true });
-  }
-
-  if (mapEmbed) {
-    mapEmbed.addEventListener('touchstart', function(e) {
-      mapEmbed.style.pointerEvents = 'auto';
-    }, { passive: true });
-    mapEmbed.addEventListener('touchend', function() {
-      setTimeout(() => {
-        mapEmbed.style.pointerEvents = 'none';
-      }, 100);
-    }, { passive: true });
-  }
-
   /* ── RSVP BUTTON ── */
   const rsvpBtn = document.getElementById('rsvpBtn');
   if (rsvpBtn) {
@@ -1151,23 +1076,6 @@
       e.stopPropagation();
       window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');
     }, false);
-  }
-
-  /* ── iOS SCROLL FIX ── */
-  const invContainer = document.getElementById('invitation');
-  
-  // Prevent body scroll while invitation is open
-  invContainer.addEventListener('touchmove', function(e) {
-    // Allow scroll only if there's content to scroll
-    if (invContainer.scrollHeight <= invContainer.clientHeight) {
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  // Smooth scroll behavior initialization
-  if ('scrollBehavior' in document.documentElement.style === false) {
-    // Fallback for browsers that don't support smooth scroll
-    document.documentElement.style.scrollBehavior = 'auto';
   }
 })();
 </script>
