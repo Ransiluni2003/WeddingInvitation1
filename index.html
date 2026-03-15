@@ -20,10 +20,12 @@
   }
 
   html, body {
-    height: 100%;
+    width: 100%;
     font-family: "Lato", sans-serif;
     background: #000;
-    overscroll-behavior: none;
+    overflow-x: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
   }
 
   /* ===== VIDEO SCREEN ===== */
@@ -33,7 +35,7 @@
     transition: opacity 1s ease, transform 1.2s ease;
   }
   #video-screen.hide {
-    opacity: 0; transform: scale(1.06); pointer-events: none;
+    opacity: 0; transform: scale(1.06); pointer-events: none; visibility: hidden; z-index: -1;
   }
 
   #bg-video {
@@ -69,20 +71,30 @@
 
   /* ===== INVITATION PAGE ===== */
   #invitation {
-    position: fixed; inset: 0; z-index: 50;
+    position: absolute; top: 0; left: 0; right: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 50;
     background: var(--cream);
-    overflow-y: scroll; -webkit-overflow-scrolling: touch;
-    opacity: 0; pointer-events: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    opacity: 0;
+    pointer-events: none;
     transform: translateY(40px);
     transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
   }
   #invitation.show {
-    opacity: 1; pointer-events: all; transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
     padding-bottom: calc(3rem + var(--safe-bottom));
   }
 
   .inv-page {
-    min-height: 100%; max-width: min(900px, 92vw);
+    width: 100%;
+    min-height: 100vh;
+    max-width: min(900px, 92vw);
     margin: 0 auto;
     padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 4rem);
     position: relative;
@@ -148,6 +160,10 @@
   tapBtn.addEventListener('click', () => {
     videoScreen.classList.add('hide');
     invitation.classList.add('show');
+    // Remove video screen from DOM flow after animation
+    setTimeout(() => {
+      videoScreen.style.display = 'none';
+    }, 1200);
   });
 </script>
 
