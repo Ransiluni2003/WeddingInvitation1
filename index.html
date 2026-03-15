@@ -4,59 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Wedding Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #f6fbf4; --gold: #2e6417; --gold-light: #5a9b3c; --gold-dark: #1f4a10;
-    --brown: #3a4a2a; --text: #1e2a1a; --accent: #c9a84c;
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-    --safe-top: env(safe-area-inset-top, 0px);
-  }
-
-  html, body { height: 100%; font-family: "Lato", sans-serif; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
-  body { background: #000; }
+  *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+  html, body { height:100%; overflow-x:hidden; font-family: sans-serif; -webkit-text-size-adjust:100%; }
+  body { background:#000; }
 
   /* ===== VIDEO SCREEN ===== */
   #video-screen {
-    position: fixed; inset: 0; z-index: 100;
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    position: fixed; inset:0; z-index:100;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
     transition: opacity 1s ease, transform 1.2s ease;
   }
-  #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
+  #video-screen.hide { opacity:0; transform: scale(1.06); pointer-events:none; }
 
-  #bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-  .video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); z-index: 1; }
+  #bg-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+  .video-overlay { position:absolute; inset:0; background:rgba(0,0,0,0.25); z-index:1; }
 
-  .tap-btn-wrap { position: relative; z-index: 2; margin-bottom: calc(4rem + var(--safe-bottom)); display: flex; flex-direction: column; align-items: center; }
-  .tap-btn { padding: 1rem 3rem; border: 1px solid rgba(232,204,128,0.7); color: #fff; background: transparent; font-family: "Cinzel", serif; cursor: pointer; border-radius: 2px; }
-  .tap-ring { position: absolute; width: 100%; height: 100%; border: 1px solid rgba(201,168,76,0.45); border-radius: 2px; animation: ringPulse 2.2s ease-out infinite; pointer-events: none; }
-  .tap-ring:nth-child(2) { animation-delay: 0.7s; }
-  .tap-ring:nth-child(3) { animation-delay: 1.4s; }
-  @keyframes ringPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(1.65); opacity: 0; } }
+  .tap-btn-wrap { position: relative; z-index:2; margin-bottom: 4rem; display:flex; flex-direction:column; align-items:center; }
+  .tap-btn { padding: 1rem 3rem; border:1px solid #fff; color:#fff; background:transparent; cursor:pointer; border-radius:2px; }
 
   /* ===== INVITATION ===== */
   #invitation {
-    display: none; /* hidden initially */
-    background: var(--cream); color: var(--text); min-height: 100vh;
-    overflow-y: auto; -webkit-overflow-scrolling: touch; /* iOS smooth scroll */
-    touch-action: pan-y; padding-bottom: calc(var(--safe-bottom));
+    display:none;
+    background:#f6fbf4;
+    color:#1e2a1a;
+    min-height:100%;
+    overflow-y:auto;
+    -webkit-overflow-scrolling: touch;
+    padding:2rem;
   }
-  #invitation.show { display: block; }
 
-  .inv-page { min-height: 100vh; max-width: 900px; margin: 0 auto; padding: 4rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+  .inv-page { max-width:900px; margin:0 auto 2rem; padding:2rem; display:flex; flex-direction:column; align-items:center; text-align:center; gap:1rem; }
 
-  .inv-logo { width: 150px; margin-bottom: 1rem; }
-  .inv-tag { font-family: "Lato", sans-serif; font-weight: 300; color: var(--gold); }
-  .inv-together { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.2rem; color: var(--brown); }
-  .inv-names { font-family: "Cinzel", serif; font-size: 3rem; color: var(--text); margin: 0.5rem 0; }
-  .inv-names .ampersand { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 1.5rem; color: var(--gold); display: block; }
-  .inv-request { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--brown); max-width: 420px; line-height: 1.8; }
-
-  .inv-date { font-family: "Cinzel", serif; font-size: 1.8rem; color: var(--text); margin: 2rem 0; }
-
-  .rsvp-section { margin-top: 2rem; }
-  .rsvp-btn { padding: 0.8rem 2.5rem; background: linear-gradient(135deg, var(--gold-dark), var(--gold)); color: white; font-family: "Cinzel", serif; border-radius: 2px; border: none; cursor: pointer; }
+  .inv-logo { width:150px; margin-bottom:1rem; }
+  .inv-names { font-size:2rem; margin:1rem 0; }
+  .inv-date { font-size:1.2rem; margin:1rem 0; }
+  .rsvp-btn { padding:0.8rem 2rem; background:goldenrod; color:white; border:none; border-radius:2px; cursor:pointer; }
 
 </style>
 </head>
@@ -69,12 +52,7 @@
   </video>
   <div class="video-overlay"></div>
   <div class="tap-btn-wrap">
-    <button class="tap-btn" id="tapBtn">
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
-      ✦ &nbsp;Tap to Open
-    </button>
+    <button class="tap-btn" id="tapBtn">Tap to Open</button>
   </div>
 </div>
 
@@ -82,14 +60,20 @@
 <div id="invitation">
   <div class="inv-page">
     <img class="inv-logo" src="logoCV-removebg-preview.png" alt="Logo">
-    <p class="inv-tag">Together with their families</p>
-    <p class="inv-together">invite you to celebrate the marriage of</p>
-    <div class="inv-names">Chamith<span class="ampersand">&</span>Vihanga</div>
-    <p class="inv-request">Together with joyful hearts, we joyfully invite you to share in the beginning of our forever.</p>
+    <p>Together with their families</p>
+    <p>invite you to celebrate the marriage of</p>
+    <div class="inv-names">Chamith & Vihanga</div>
+    <p>Together with joyful hearts, we joyfully invite you to share in the beginning of our forever.</p>
     <div class="inv-date">Thursday 07 May 2026</div>
-    <div class="rsvp-section">
-      <button class="rsvp-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank')">RSVP Now</button>
-    </div>
+    <button class="rsvp-btn" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank')">RSVP Now</button>
+  </div>
+  <div class="inv-page">
+    <p>Second Page Content</p>
+    <p>Scroll should work here on iPhone!</p>
+  </div>
+  <div class="inv-page">
+    <p>Third Page Content</p>
+    <p>Keep scrolling…</p>
   </div>
 </div>
 
@@ -100,8 +84,17 @@
 
   tapBtn.addEventListener('click', () => {
     videoScreen.classList.add('hide');
-    invitation.classList.add('show');
-    document.body.style.overflow = 'auto'; // enable scroll
+    invitation.style.display = 'block';
+    
+    // Fix iOS scroll
+    invitation.style.height = window.innerHeight + 'px';
+    invitation.style.overflowY = 'auto';
+    invitation.scrollTop = 0;
+    document.body.style.overflow = 'hidden'; // lock body behind
+    setTimeout(() => {
+      invitation.style.height = 'auto';
+      document.body.style.overflow = 'auto'; // allow scroll
+    }, 100);
   });
 </script>
 
