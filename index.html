@@ -194,16 +194,20 @@
     background: var(--cream);
     -webkit-user-select: text;
     user-select: text;
-    touch-action: pan-down pan-up;
+    touch-action: none;
     -webkit-touch-callout: default;
     will-change: transform, opacity;
+    scroll-behavior: smooth;
   }
   #invitation.show {
     opacity: 1;
-    pointer-events: all;
+    pointer-events: auto;
     transform: translateY(0);
     /* Pad bottom for iPhone home indicator */
     padding-bottom: var(--safe-bottom);
+  }
+  #invitation.show * {
+    pointer-events: auto;
   }
 
   /* Particles */
@@ -446,8 +450,15 @@
     background: #000;
     width: 100%;
     max-width: 100%;
-    touch-action: auto;
-    pointer-events: auto;
+    pointer-events: none;
+    touch-action: none;
+  }
+  .video-frame video {
+    pointer-events: none;
+    touch-action: none;
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .map-embed {
     border: 0;
@@ -456,8 +467,8 @@
     height: 250px;
     margin-top: 12px;
     display: block;
-    pointer-events: auto;
-    touch-action: auto;
+    pointer-events: none;
+    touch-action: none;
   }
   .gm-address {
     margin-top: 0.6rem;
@@ -951,14 +962,10 @@
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
     
-    // iOS scroll fix - enable scrolling on invitation container
+    // Reset scroll position for clean start
     setTimeout(() => {
       inv.scrollTop = 0;
-      // Force scroll position update on iOS
-      if (inv.scrollHeight > inv.clientHeight) {
-        inv.style.overflow = 'auto';
-      }
-    }, 100);
+    }, 50);
     
     initParticles();
     tryPlayMusic();
@@ -1109,6 +1116,33 @@
     obs.observe(storyVideo);
   }
 
+  /* Enable pointer events on video/map when user tries to interact */
+  const videoFrame = document.querySelector('.video-frame');
+  const mapEmbed = document.querySelector('.map-embed');
+  const inv = document.getElementById('invitation');
+
+  if (videoFrame) {
+    videoFrame.addEventListener('touchstart', function(e) {
+      videoFrame.style.pointerEvents = 'auto';
+    }, { passive: true });
+    videoFrame.addEventListener('touchend', function() {
+      setTimeout(() => {
+        videoFrame.style.pointerEvents = 'none';
+      }, 100);
+    }, { passive: true });
+  }
+
+  if (mapEmbed) {
+    mapEmbed.addEventListener('touchstart', function(e) {
+      mapEmbed.style.pointerEvents = 'auto';
+    }, { passive: true });
+    mapEmbed.addEventListener('touchend', function() {
+      setTimeout(() => {
+        mapEmbed.style.pointerEvents = 'none';
+      }, 100);
+    }, { passive: true });
+  }
+
   /* ── RSVP BUTTON ── */
   const rsvpBtn = document.getElementById('rsvpBtn');
   if (rsvpBtn) {
@@ -1120,26 +1154,21 @@
   }
 
   /* ── iOS SCROLL FIX ── */
-  const inv = document.getElementById('invitation');
-  // Handle iOS overflow and scroll enabling
-  inv.addEventListener('touchmove', function(e) {
-    // Allow touch scrolling
-    if (inv.scrollHeight > inv.clientHeight) {
-      e.stopPropagation();
+  const invContainer = document.getElementById('invitation');
+  
+  // Prevent body scroll while invitation is open
+  invContainer.addEventListener('touchmove', function(e) {
+    // Allow scroll only if there's content to scroll
+    if (invContainer.scrollHeight <= invContainer.clientHeight) {
+      e.preventDefault();
     }
-  }, { passive: true });
+  }, { passive: false });
 
-  // Fix for iOS Safari scroll position
-  inv.addEventListener('scroll', function() {
-    // Trigger reflow to ensure smooth scrolling
-  }, { passive: true });
-
-  // Ensure scroll works on iOS when showing invitation
-  window.addEventListener('load', function() {
-    if (inv.classList.contains('show')) {
-      inv.scrollTop = 0;
-    }
-  });
+  // Smooth scroll behavior initialization
+  if ('scrollBehavior' in document.documentElement.style === false) {
+    // Fallback for browsers that don't support smooth scroll
+    document.documentElement.style.scrollBehavior = 'auto';
+  }
 })();
 </script>
 </body>
