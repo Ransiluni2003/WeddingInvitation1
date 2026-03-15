@@ -19,6 +19,7 @@
   }
 
   html, body { height: 100%; font-family: "Lato", sans-serif; background: #000; overflow: hidden; }
+  body.invitation-open { overflow: auto; background: var(--cream); }
 
   /* ===== VIDEO SCREEN ===== */
   #video-screen {
@@ -134,13 +135,18 @@
   #invitation {
     position: fixed; inset: 0;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     z-index: 50;
     opacity: 0; pointer-events: none;
     transform: translateY(40px);
     transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
     background: var(--cream);
   }
-  #invitation.show { opacity: 1; pointer-events: all; transform: translateY(0); }
+  #invitation.show {
+    opacity: 1; pointer-events: all; transform: translateY(0);
+    position: relative;
+    min-height: 100vh;
+  }
 
   /* Particles */
   #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -422,47 +428,9 @@
     right: 28px;
     z-index: 300;
     display: flex;
-      <section class="section-block section-block--video">
-        <div class="ornament-line"><hr><span>✦</span><hr></div>
-        <p class="section-label">Invitation</p>
-        <div class="video-frame">
-          <!-- Replace the src below with your video file path e.g. src="videos/wedding.mp4" -->
-          <video
-            id="story-video"
-            src="Green Flower Watercolor Wedding Invitation Mobile Video (2).mp4"
-            muted
-            loop
-            playsinline
-            preload="auto"
-            style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;">
-          </video>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="ornament-line"><hr><span>✦</span><hr></div>
-        <div id="countdown" style="margin-top:20px;font-family:'Cinzel';font-size:20px;color:#9a7530;">
-          <p class="gm-label">Until</p>
-          <h2 class="gm-heading">The Big Day</h2>
-        </div>
-        <div class="countdown-container">
-          <div class="count-card"><span id="days">0</span><p>Days</p></div>
-          <div class="count-card"><span id="hours">0</span><p>Hours</p></div>
-          <div class="count-card"><span id="minutes">0</span><p>Minutes</p></div>
-          <div class="count-card"><span id="seconds">0</span><p>Seconds</p></div>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="ornament-line"><hr><span>✦</span><hr></div>
-        <p class="gm-label">Way to the</p>
-        <h2 class="gm-heading">Location</h2>
-        <h3 class="gm-location-title">Thurya Hotel</h3>
-        <p class="gm-address">Kudawaskaduwa, Waskaduwa, Kalutara</p>
-        <iframe
-          class="map-embed"
-          src="https://www.google.com/maps?q=Thurya+Hotel+Kalutara&output=embed"></iframe>
-      </section>
+    align-items: center;
+    gap: 0;
+    filter: drop-shadow(0 8px 32px rgba(30, 60, 20, 0.28));
     box-shadow:
       0 8px 32px rgba(30,74,16,0.55),
       0 1px 0 rgba(255,255,255,0.2) inset;
@@ -740,9 +708,27 @@
       <circle cx="5" cy="5" r="2" fill="#c9a84c" opacity="0.8"/>
     </svg>
   </div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
+  <div class="corner tr">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#c9a84c" opacity="0.8"/>
+    </svg>
+  </div>
+  <div class="corner bl">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#c9a84c" opacity="0.8"/>
+    </svg>
+  </div>
+  <div class="corner br">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#c9a84c" opacity="0.8"/>
+    </svg>
+  </div>
 
   <div class="inv-page">
     <div class="inv-content">
@@ -791,15 +777,10 @@
         <div class="gm-signature">Chamith &amp; Vihanga</div>
       </div>
 
-      <div>
-      <!-- ══════════════════════════════
-           VIDEO SECTION
-      ══════════════════════════════ -->
-       <div class="ornament-line"><hr><span>✦</span><hr></div>
-      <div style="margin-top:3rem;width:100%;max-width:340px;text-align:center;">
-        <p style="font-family:'Lato',sans-serif;font-weight:300;font-size:0.72rem;letter-spacing:0.35em;text-transform:uppercase;color:#2e6417;margin-bottom:1rem;">Invitation</p>
-        <div style="border-radius:20px;overflow:hidden;box-shadow:0 12px 48px rgba(30,74,16,0.22);border:2px solid rgba(201,168,76,0.3);background:#000;">
-          <!-- ✏️ Replace the src below with your video file path e.g. src="videos/wedding.mp4" -->
+      <section class="section-block section-block--video">
+        <div class="ornament-line"><hr><span>✦</span><hr></div>
+        <p class="section-label">Invitation</p>
+        <div class="video-frame">
           <video
             id="story-video"
             src="Green Flower Watercolor Wedding Invitation Mobile Video (2).mp4"
@@ -810,45 +791,33 @@
             style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;">
           </video>
         </div>
-      </div>
-</div>
-</br>
-</br>
+      </section>
 
-      <!-- COUNTDOWN -->
-       <div>
-         <div class="ornament-line"><hr>span>✦</span><hr></div>
-      <div id="countdown" style="margin-top:20px;font-family:'Cinzel';font-size:20px;color:#9a7530;">
-         <p class="gm-label">Until</p>
-        <h2 class="gm-heading">The Big Day</h2>
-      </div>
-      <div class="countdown-container">
-        <div class="count-card"><span id="days">0</span><p>Days</p></div>
-        <div class="count-card"><span id="hours">0</span><p>Hours</p></div>
-        <div class="count-card"><span id="minutes">0</span><p>Minutes</p></div>
-        <div class="count-card"><span id="seconds">0</span><p>Seconds</p></div>
-      </div>
-</div>
-</br>
-</br>
-      <!-- MAP -->
-       <div>
-         <div class="ornament-line"><hr><span>✦</span><hr></div>
-      <div style="margin-top:30px;width:100%;max-width:500px;">
-         <p class="gm-label">WAY TO THE</p>
+      <section class="section-block">
+        <div class="ornament-line"><hr><span>✦</span><hr></div>
+        <div id="countdown" style="margin-top:20px;font-family:'Cinzel';font-size:20px;color:#9a7530;">
+          <p class="gm-label">Until</p>
+          <h2 class="gm-heading">The Big Day</h2>
+        </div>
+        <div class="countdown-container">
+          <div class="count-card"><span id="days">0</span><p>Days</p></div>
+          <div class="count-card"><span id="hours">0</span><p>Hours</p></div>
+          <div class="count-card"><span id="minutes">0</span><p>Minutes</p></div>
+          <div class="count-card"><span id="seconds">0</span><p>Seconds</p></div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="ornament-line"><hr><span>✦</span><hr></div>
+        <p class="gm-label">Way to the</p>
         <h2 class="gm-heading">Location</h2>
         <h3 class="gm-location-title">Thurya Hotel</h3>
-        <h4 class="gm-location-hotel"> Grand Ballroom</h4>
-      </br>
-        <p>Kudawaskaduwa,Waskaduwa,Kalutara</p>
-    </br>
-</br>
+        <h4 class="gm-location-hotel">Grand Ballroom</h4>
+        <p class="gm-address">Kudawaskaduwa, Waskaduwa, Kalutara</p>
         <iframe
-          src="https://www.google.com/maps?q=Thurya+Hotel+Kalutara&output=embed"
-          width="100%" height="250"
-          style="border:0;border-radius:10px;"></iframe>
-      </div>
-      </div>
+          class="map-embed"
+          src="https://www.google.com/maps?q=Thurya+Hotel+Kalutara&output=embed"></iframe>
+      </section>
     </div>
   </div>
 </div>
@@ -888,6 +857,7 @@
     document.getElementById('video-screen').classList.add('hide');
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
+    document.body.classList.add('invitation-open');
     initParticles();
 
     const music   = document.getElementById('bgMusic');
@@ -919,12 +889,6 @@
   document.getElementById('tapBtn').addEventListener('touchend', function(e) {
     e.preventDefault(); enterSite();
   });
-
-  /* ── COPY CORNERS ── */
-  const corners = document.querySelectorAll('.corner');
-  corners[1].innerHTML = corners[0].innerHTML;
-  corners[2].innerHTML = corners[0].innerHTML;
-  corners[3].innerHTML = corners[0].innerHTML;
 
   /* ── COUNTDOWN ── */
   function startCountdown() {
