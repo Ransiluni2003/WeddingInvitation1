@@ -42,13 +42,7 @@
     align-items: center; justify-content: flex-end;
     transition: opacity 1s ease, transform 1.2s ease;
   }
-  #video-screen.hide {
-    opacity: 0;
-    transform: scale(1.06);
-    pointer-events: none;
-    visibility: hidden;
-    z-index: -1;
-  }
+  #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
 
   #bg-video {
     position: absolute; inset: 0;
@@ -456,50 +450,55 @@
   }
 
   /* ===========================
-     MUSIC BUTTON — SIMPLE VERSION
-     Fixed position, always visible
+     MUSIC BUTTON — MOBILE FIXED
+     Fixed position, always visible,
+     safe area aware for iPhone
   =========================== */
   #music-widget {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 99999;
-    display: block;
+    z-index: 101;
+    display: block !important;
   }
 
   #musicBtn {
     position: relative;
-    padding: 12px 18px;
-    border-radius: 6px;
-    border: 2px solid #2e6417;
+    padding: 10px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
     background: #2e6417;
     color: #fff;
     font-family: "Cinzel", serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    flex-shrink: 0;
     transition: all 0.2s ease;
-    display: block;
-    box-shadow: 0 4px 12px rgba(30, 74, 16, 0.4);
+    box-shadow: 0 4px 12px rgba(30, 74, 16, 0.5);
+    display: inline-block !important;
+    z-index: 101;
   }
-  
   #musicBtn:active {
     transform: scale(0.95);
-    box-shadow: 0 2px 6px rgba(30, 74, 16, 0.6);
+    box-shadow: 0 2px 6px rgba(30, 74, 16, 0.7);
   }
   
   #musicBtn:hover {
     background: #1f4a10;
-    border-color: #1f4a10;
   }
 
   #musicBtn.playing {
     background: #5a9b3c;
-    border-color: #5a9b3c;
+  }
+
+  /* Music bars icon */
+  .music-bars {
+    display: none;
   }
 
   /* Volume panel (shows on hover/long-press) */
@@ -627,8 +626,8 @@
     .tap-btn { padding: 0.9rem 2.2rem; letter-spacing: 0.2em; }
     .ornament-line { max-width: 300px; }
     .rsvp-btn { width: 100%; max-width: 280px; }
-    /* Music button slightly smaller on small phones */
-    #musicBtn { width: 52px; height: 52px; }
+    /* Music button smaller on small phones */
+    #musicBtn { padding: 8px 12px; font-size: 12px; }
   }
 
   @media (min-width: 1024px) {
@@ -671,11 +670,6 @@
       <div class="tap-ring"></div>
       ✦ &nbsp;Tap to Open
     </button>
-  </div>
-
-  <!-- Music Button - Always on Top -->
-  <div id="music-widget">
-    <button id="musicBtn" aria-label="Toggle Music">MUSIC</button>
   </div>
 </div>
 
@@ -809,6 +803,26 @@
   <source src="paulyudin-wedding-485932 (1).mp3" type="audio/mpeg">
 </audio>
 
+<!-- ===========================
+     MUSIC WIDGET — FULLY FIXED
+============================ -->
+<div id="music-widget">
+  <!-- Volume panel -->
+  <div id="vol-slider-wrap">
+    <label>Vol</label>
+    <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.7"
+           aria-label="Volume">
+  </div>
+
+  <!-- Main button -->
+  <button id="musicBtn" aria-label="Toggle Music">
+    MUSIC
+  </button>
+
+  <!-- Tooltip (desktop only) -->
+  <div id="music-tooltip">Play Music</div>
+</div>
+
 <script>
 (function() {
   /* ── ENTER SITE ── */
@@ -824,11 +838,13 @@
   function tryPlayMusic() {
     const music  = document.getElementById('bgMusic');
     const btn    = document.getElementById('musicBtn');
+    const tip    = document.getElementById('music-tooltip');
 
     music.volume = 0.7;
     music.play().then(() => {
       btn.classList.add('playing');
       btn.textContent = 'PAUSE';
+      if (tip) tip.textContent = 'Pause Music';
     }).catch(() => {
       /* Autoplay blocked — user must tap music button manually */
     });
@@ -885,6 +901,9 @@
   /* ── MUSIC BUTTON ── */
   const bgMusic   = document.getElementById('bgMusic');
   const musicBtn  = document.getElementById('musicBtn');
+  const tooltip   = document.getElementById('music-tooltip');
+  const volSlider = document.getElementById('vol-slider');
+  const volWrap   = document.getElementById('vol-slider-wrap');
 
   bgMusic.volume = 0.7;
 
@@ -894,16 +913,44 @@
       bgMusic.play().then(() => {
         musicBtn.classList.add('playing');
         musicBtn.textContent = 'PAUSE';
+        if (tooltip) tooltip.textContent = 'Pause Music';
       }).catch(() => {});
     } else {
       bgMusic.pause();
       musicBtn.classList.remove('playing');
       musicBtn.textContent = 'MUSIC';
+      if (tooltip) tooltip.textContent = 'Play Music';
     }
   }
 
   musicBtn.addEventListener('click', toggleMusic);
-  musicBtn.addEventListener('touchend', toggleMusic, { passive: false });
+  musicBtn.addEventListener('touchend', function(e) {
+    // Only trigger if not a long-press (volume panel)
+    if (!longPressing) toggleMusic(e);
+    longPressing = false;
+    clearTimeout(longPressTimer);
+  }, { passive: false });
+
+  volSlider.addEventListener('input', () => {
+    bgMusic.volume = +volSlider.value;
+  });
+
+  /* Long-press on mobile to show volume panel */
+  let longPressTimer;
+  let longPressing = false;
+  musicBtn.addEventListener('touchstart', function() {
+    longPressTimer = setTimeout(() => {
+      longPressing = true;
+      volWrap.classList.add('visible');
+    }, 500);
+  }, { passive: true });
+  musicBtn.addEventListener('touchend', function() {
+    clearTimeout(longPressTimer);
+    // Hide vol panel after 3s if shown
+    if (longPressing) {
+      setTimeout(() => { volWrap.classList.remove('visible'); }, 3000);
+    }
+  }, { passive: true });
 
   /* ── STORY VIDEO: play when visible ── */
   const storyVideo = document.getElementById('story-video');
