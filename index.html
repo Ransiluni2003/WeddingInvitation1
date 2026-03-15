@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Wedding Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -457,78 +456,56 @@
   }
 
   /* ===========================
-     MUSIC BUTTON — MOBILE FIXED
-     Fixed position, always visible,
-     safe area aware for iPhone
+     MUSIC BUTTON — SIMPLE VERSION
+     Fixed position, always visible
   =========================== */
   #music-widget {
     position: fixed;
-    /* Account for iPhone home indicator */
-    bottom: calc(24px + var(--safe-bottom));
-    right: 24px;
-    z-index: 99999 !important; /* Maximum z-index to ensure visibility */
-    display: flex !important;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0;
-    visibility: visible !important;
-    opacity: 1 !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99999 !important;
+    display: block !important;
   }
 
   #musicBtn {
     position: relative;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 2px solid #2e6417;
+    background: #2e6417;
+    color: #fff;
+    font-family: "Cinzel", serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     cursor: pointer;
-    background: linear-gradient(145deg, #2e6417, #1f4a10);
-    box-shadow:
-      0 8px 32px rgba(30,74,16,0.55),
-      0 2px 0 rgba(255,255,255,0.15) inset,
-      0 -2px 0 rgba(0,0,0,0.2) inset;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    /* Prevent shrinking on iOS */
-    flex-shrink: 0;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: all 0.2s ease;
     visibility: visible !important;
     opacity: 1 !important;
-    z-index: 99999 !important;
+    display: block !important;
+    box-shadow: 0 4px 12px rgba(30, 74, 16, 0.4);
   }
+  
   #musicBtn:active {
-    transform: scale(0.93);
-    box-shadow: 0 4px 16px rgba(30,74,16,0.55);
+    transform: scale(0.95);
+    box-shadow: 0 2px 6px rgba(30, 74, 16, 0.6);
+  }
+  
+  #musicBtn:hover {
+    background: #1f4a10;
+    border-color: #1f4a10;
   }
 
-  /* Spinning ring when playing */
-  #musicBtn::before {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border-radius: 50%;
-    border: 1.5px solid transparent;
-    border-top-color: rgba(201,168,76,0.9);
-    border-right-color: rgba(201,168,76,0.4);
-    animation: spinVinyl 2.4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-  #musicBtn.playing::before { opacity: 1; }
-  @keyframes spinVinyl {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+  #musicBtn.playing {
+    background: #5a9b3c;
+    border-color: #5a9b3c;
   }
 
-  /* Icon styling */
-  #musicBtn i {
-    color: #fff;
-    font-size: 24px;
-    z-index: 1;
-    position: relative;
+  .music-icon {
+    display: inline;
   }
 
   /* Volume panel (shows on hover/long-press) */
@@ -834,23 +811,12 @@
 </audio>
 
 <!-- ===========================
-     MUSIC WIDGET — FULLY FIXED
+     MUSIC WIDGET — SIMPLE BUTTON
 ============================ -->
 <div id="music-widget">
-  <!-- Volume panel -->
-  <div id="vol-slider-wrap">
-    <label>Vol</label>
-    <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.7"
-           aria-label="Volume">
-  </div>
-
-  <!-- Main button -->
   <button id="musicBtn" aria-label="Toggle Music">
-    <i class="fas fa-volume-up"></i>
+    MUSIC
   </button>
-
-  <!-- Tooltip (desktop only) -->
-  <div id="music-tooltip">Play Music</div>
 </div>
 
 <script>
@@ -868,15 +834,11 @@
   function tryPlayMusic() {
     const music  = document.getElementById('bgMusic');
     const btn    = document.getElementById('musicBtn');
-    const icon   = btn.querySelector('i');
-    const tip    = document.getElementById('music-tooltip');
 
-    music.volume = +document.getElementById('vol-slider').value;
+    music.volume = 0.7;
     music.play().then(() => {
       btn.classList.add('playing');
-      icon.classList.remove('fa-volume-mute');
-      icon.classList.add('fa-volume-up');
-      if (tip) tip.textContent = 'Pause Music';
+      btn.textContent = 'PAUSE';
     }).catch(() => {
       /* Autoplay blocked — user must tap music button manually */
     });
@@ -933,59 +895,25 @@
   /* ── MUSIC BUTTON ── */
   const bgMusic   = document.getElementById('bgMusic');
   const musicBtn  = document.getElementById('musicBtn');
-  const tooltip   = document.getElementById('music-tooltip');
-  const volSlider = document.getElementById('vol-slider');
-  const volWrap   = document.getElementById('vol-slider-wrap');
 
   bgMusic.volume = 0.7;
 
   function toggleMusic(e) {
     e.preventDefault();
-    const icon = musicBtn.querySelector('i');
     if (bgMusic.paused) {
       bgMusic.play().then(() => {
         musicBtn.classList.add('playing');
-        icon.classList.remove('fa-volume-mute');
-        icon.classList.add('fa-volume-up');
-        if (tooltip) tooltip.textContent = 'Pause Music';
+        musicBtn.textContent = 'PAUSE';
       }).catch(() => {});
     } else {
       bgMusic.pause();
       musicBtn.classList.remove('playing');
-      icon.classList.remove('fa-volume-up');
-      icon.classList.add('fa-volume-mute');
-      if (tooltip) tooltip.textContent = 'Play Music';
+      musicBtn.textContent = 'MUSIC';
     }
   }
 
   musicBtn.addEventListener('click', toggleMusic);
-  musicBtn.addEventListener('touchend', function(e) {
-    // Only trigger if not a long-press (volume panel)
-    if (!longPressing) toggleMusic(e);
-    longPressing = false;
-    clearTimeout(longPressTimer);
-  }, { passive: false });
-
-  volSlider.addEventListener('input', () => {
-    bgMusic.volume = +volSlider.value;
-  });
-
-  /* Long-press on mobile to show volume panel */
-  let longPressTimer;
-  let longPressing = false;
-  musicBtn.addEventListener('touchstart', function() {
-    longPressTimer = setTimeout(() => {
-      longPressing = true;
-      volWrap.classList.add('visible');
-    }, 500);
-  }, { passive: true });
-  musicBtn.addEventListener('touchend', function() {
-    clearTimeout(longPressTimer);
-    // Hide vol panel after 3s if shown
-    if (longPressing) {
-      setTimeout(() => { volWrap.classList.remove('visible'); }, 3000);
-    }
-  }, { passive: true });
+  musicBtn.addEventListener('touchend', toggleMusic, { passive: false });
 
   /* ── STORY VIDEO: play when visible ── */
   const storyVideo = document.getElementById('story-video');
