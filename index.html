@@ -197,20 +197,20 @@
   .inv-page::before {
     content: "";
     position: absolute;
-    top: 16px; left: 16px; right: 16px; bottom: 16px;
+    top: 0; left: 0; right: 0; bottom: 0;
     border: 1px solid rgba(201,168,76,0.3);
     pointer-events: none; z-index: 0;
   }
 
   .corner {
-    position: fixed; width: 60px; height: 60px;
-    z-index: 1; pointer-events: none;
+    position: absolute; width: 60px; height: 60px;
+    z-index: 2; pointer-events: none;
   }
   .corner svg { width: 100%; height: 100%; }
-  .corner.tl { top: 16px; left: 16px; }
-  .corner.tr { top: 16px; right: 16px; transform: scaleX(-1); }
-  .corner.bl { bottom: calc(16px + var(--safe-bottom)); left: 16px; transform: scaleY(-1); }
-  .corner.br { bottom: calc(16px + var(--safe-bottom)); right: 16px; transform: scale(-1); }
+  .corner.tl { top: 0; left: 0; }
+  .corner.tr { top: 0; right: 0; transform: scaleX(-1); }
+  .corner.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+  .corner.br { bottom: 0; right: 0; transform: scale(-1); }
 
   .inv-content {
     position: relative; z-index: 2;
