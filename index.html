@@ -21,7 +21,7 @@
     --safe-top: env(safe-area-inset-top, 0px);
   }
 
-  html { height: 100%; -webkit-text-size-adjust: 100%; }
+  html { height: 100%; -webkit-text-size-adjust: 100%; -webkit-user-select: none; user-select: none; }
   body {
     height: 100%;
     font-family: "Lato", sans-serif;
@@ -29,10 +29,15 @@
     overflow: hidden;
     /* Prevent iOS bounce scroll on body */
     overscroll-behavior: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   body.invitation-open {
     overflow: hidden; /* Keep hidden — we scroll #invitation instead */
     background: var(--cream);
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   /* ===== VIDEO SCREEN ===== */
@@ -41,6 +46,8 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: flex-end;
     transition: opacity 1s ease, transform 1.2s ease;
+    -webkit-user-select: none;
+    user-select: none;
   }
   #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
 
@@ -48,6 +55,8 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover; z-index: 0;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .video-overlay {
@@ -67,6 +76,8 @@
     z-index: 2; text-align: center;
     animation: fadeUp 1.4s ease 0.8s both;
     width: 90%;
+    -webkit-user-select: none;
+    user-select: none;
   }
   .video-title-tag {
     font-family: "Lato", sans-serif; font-weight: 300;
@@ -114,6 +125,10 @@
     /* Fix iOS button tap highlight */
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
   }
   .tap-btn::before {
     content: "";
@@ -163,6 +178,8 @@
     transform: translateY(40px);
     transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
     background: var(--cream);
+    -webkit-user-select: text;
+    user-select: text;
   }
   #invitation.show {
     opacity: 1;
@@ -197,20 +214,20 @@
   .inv-page::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 16px; left: 16px; right: 16px; bottom: 16px;
     border: 1px solid rgba(201,168,76,0.3);
     pointer-events: none; z-index: 0;
   }
 
+/* Corner SVG ornaments */
   .corner {
-    position: absolute; width: 60px; height: 60px;
+    position: fixed; width: 60px; height: 60px;
     z-index: 2; pointer-events: none;
   }
-  .corner svg { width: 100%; height: 100%; }
-  .corner.tl { top: 0; left: 0; }
-  .corner.tr { top: 0; right: 0; transform: scaleX(-1); }
-  .corner.bl { bottom: 0; left: 0; transform: scaleY(-1); }
-  .corner.br { bottom: 0; right: 0; transform: scale(-1); }
+  .corner.tl { top: 16px; left: 16px; }
+  .corner.tr { top: 16px; right: 16px; transform: scaleX(-1); }
+  .corner.bl { bottom: 16px; left: 16px; transform: scaleY(-1); }
+  .corner.br { bottom: 16px; right: 16px; transform: scale(-1); }
 
   .inv-content {
     position: relative; z-index: 2;
@@ -329,6 +346,10 @@
     transition: transform 0.2s, box-shadow 0.2s;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
   }
   .rsvp-btn:hover, .rsvp-btn:active { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(160,100,0,0.4); }
 
@@ -486,6 +507,10 @@
     /* Prevent shrinking on iOS */
     flex-shrink: 0;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
   }
   #musicBtn:active {
     transform: scale(0.93);
@@ -602,6 +627,8 @@
     height: 70px;
     /* Fallback for browsers that don't support vertical slider well */
     accent-color: var(--gold);
+    -webkit-user-select: none;
+    user-select: none;
   }
   /* Webkit track */
   #vol-slider::-webkit-slider-runnable-track {
@@ -713,7 +740,7 @@
 
 <!-- ===== VIDEO SCREEN ===== -->
 <div id="video-screen">
-  <video id="bg-video" autoplay muted loop playsinline preload="auto">
+  <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="0312.mp4" type="video/mp4">
   </video>
   <div class="video-overlay"></div>
@@ -788,8 +815,8 @@
           Kindly reply by April 1st, 2026<br>
           We hope to celebrate with you.
         </p>
-        <button class="rsvp-btn"
-          onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank')">
+        <button class="rsvp-btn" id="rsvpBtn"
+          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');">
           RSVP Now
         </button>
       </div>
@@ -814,8 +841,9 @@
             muted
             loop
             playsinline
+            webkit-playsinline
             preload="auto"
-            style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;">
+            style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;-webkit-user-select:none;user-select:none;">
           </video>
         </div>
       </section>
@@ -854,7 +882,7 @@
 </div>
 
 <!-- ===== AUDIO ===== -->
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop playsinline webkit-playsinline controls style="display:none;">
   <source src="paulyudin-wedding-485932 (1).mp3" type="audio/mpeg">
 </audio>
 
@@ -918,11 +946,20 @@
   function doEnter(e) {
     if (entered) return;
     entered = true;
-    e.preventDefault();
+    if (e.preventDefault) e.preventDefault();
     enterSite();
   }
   tapBtn.addEventListener('click', doEnter);
   tapBtn.addEventListener('touchend', doEnter, { passive: false });
+  if ('PointerEvent' in window) {
+    tapBtn.addEventListener('pointerdown', function(e) {
+      if (e.isPrimary && !entered) {
+        e.preventDefault();
+        entered = true;
+        enterSite();
+      }
+    }, { passive: false });
+  }
 
   /* ── PARTICLES ── */
   function initParticles() {
@@ -987,6 +1024,7 @@
 
   musicBtn.addEventListener('click', toggleMusic);
   musicBtn.addEventListener('touchend', function(e) {
+    if (e.preventDefault) e.preventDefault();
     // Only trigger if not a long-press (volume panel)
     if (!longPressing) toggleMusic(e);
     longPressing = false;
@@ -1013,6 +1051,10 @@
       setTimeout(() => { volWrap.classList.remove('visible'); }, 3000);
     }
   }, { passive: true });
+  musicBtn.addEventListener('touchcancel', function() {
+    clearTimeout(longPressTimer);
+    longPressing = false;
+  }, { passive: true });
 
   /* ── STORY VIDEO: play when visible ── */
   const storyVideo = document.getElementById('story-video');
@@ -1024,6 +1066,16 @@
       });
     }, { threshold: 0.4 });
     obs.observe(storyVideo);
+  }
+
+  /* ── RSVP BUTTON ── */
+  const rsvpBtn = document.getElementById('rsvpBtn');
+  if (rsvpBtn) {
+    rsvpBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');
+    }, false);
   }
 })();
 </script>
