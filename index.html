@@ -114,7 +114,7 @@
     position: relative;
     padding: 1.1rem 3.5rem;
     background: transparent;
-    border: 1px solid rgba(74,144,226,0.7);
+    border: 1px solid rgba(201,168,76,0.8);
     color: #fff;
     font-family: "Cinzel", serif;
     font-size: clamp(0.75rem, 2vw, 0.95rem);
@@ -132,15 +132,15 @@
   .tap-btn::before {
     content: "";
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(74,144,226,0.15), rgba(74,144,226,0.4));
+    background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.5));
     opacity: 0; transition: opacity 0.3s;
   }
   .tap-btn:hover::before, .tap-btn:active::before { opacity: 1; }
-  .tap-btn:hover, .tap-btn:active { border-color: rgba(74,144,226,1); }
+  .tap-btn:hover, .tap-btn:active { border-color: rgba(201,168,76,1); }
 
   .tap-ring {
     position: absolute; width: 100%; height: 100%;
-    border: 1px solid rgba(74,144,226,0.45);
+    border: 1px solid rgba(201,168,76,0.45);
     border-radius: 2px;
     animation: ringPulse 2.2s ease-out infinite;
     pointer-events: none;
@@ -155,7 +155,7 @@
   .tap-hint {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-    color: rgba(74,144,226,0.7); letter-spacing: 0.1em;
+    color: rgba(201,168,76,0.85); letter-spacing: 0.1em;
   }
 
   @keyframes fadeUp {
@@ -836,7 +836,6 @@
       <div class="inv-date-block">
         <div class="inv-date">Thursday 07 May 2026</div>
       </div>
-
       <div class="rsvp-section">
         <div class="ornament-line"><hr><span>✦</span><hr></div>
         <p class="rsvp-title">RSVP</p>
@@ -845,7 +844,7 @@
           We hope to celebrate with you.
         </p>
         <button class="rsvp-btn" id="rsvpBtn"
-          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');">
+          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform?usp=dialog','_blank');">
           RSVP Now
         </button>
       </div>
@@ -919,7 +918,7 @@
 
 <!-- ===== AUDIO ===== -->
 <audio id="bgMusic" loop playsinline webkit-playsinline controls style="display:none;">
-  <source src="paulyudin-wedding-485932 (1).mp3" type="audio/mpeg">
+  <source src="Romantic-Day-chosic.com_.mp3" type="audio/mpeg">
 </audio>
 
 <!-- ===========================
