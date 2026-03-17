@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Wedding Invitation</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Lato:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -169,6 +169,13 @@
   .envelope-open-btn:hover, .envelope-open-btn:active { 
     border-color: rgba(201,168,76,1);
     transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .envelope-open-btn {
+      padding: 1rem 2.5rem;
+      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+    }
   }
 
   @keyframes buttonPulse {
@@ -382,10 +389,13 @@
     animation: fadeUp 0.8s ease 0.4s both;
   }
   .inv-names {
-    font-family: "Cinzel", serif;
-    font-size: clamp(2.6rem, 8vw, 5.5rem);
-    font-weight: 400; color: var(--text);
-    line-height: 1; letter-spacing: 0.04em; margin: 0.4rem 0;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(3rem, 10vw, 6rem);
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin: 0.4rem 0;
     animation: fadeUp 0.8s ease 0.5s both;
   }
   .inv-names .ampersand {
