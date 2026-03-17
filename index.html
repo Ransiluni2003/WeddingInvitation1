@@ -171,7 +171,6 @@
     /* Use overflow-y scroll with momentum on iOS */
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
     z-index: 50;
     opacity: 0;
     pointer-events: none;
@@ -187,6 +186,9 @@
     transform: translateY(0);
     /* Pad bottom for iPhone home indicator */
     padding-bottom: var(--safe-bottom);
+    /* Ensure scroll is not locked */
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   /* Particles */
@@ -919,6 +921,15 @@
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
+    // Reset scroll position
+    inv.scrollTop = 0;
+    // Force redraw of scroll momentum
+    setTimeout(() => {
+      inv.style.webkitOverflowScrolling = 'auto';
+      setTimeout(() => {
+        inv.style.webkitOverflowScrolling = 'touch';
+      }, 10);
+    }, 100);
     initParticles();
     tryPlayMusic();
   }
@@ -1024,11 +1035,14 @@
 
   musicBtn.addEventListener('click', toggleMusic);
   musicBtn.addEventListener('touchend', function(e) {
-    if (e.preventDefault) e.preventDefault();
-    // Only trigger if not a long-press (volume panel)
-    if (!longPressing) toggleMusic(e);
-    longPressing = false;
-    clearTimeout(longPressTimer);
+    // Only prevent default if this is a direct toggle, not scroll interference
+    if (e.target === musicBtn || e.target.closest('#musicBtn')) {
+      e.preventDefault();
+      // Only trigger if not a long-press (volume panel)
+      if (!longPressing) toggleMusic(e);
+      longPressing = false;
+      clearTimeout(longPressTimer);
+    }
   }, { passive: false });
 
   volSlider.addEventListener('input', () => {
@@ -1067,6 +1081,15 @@
     }, { threshold: 0.4 });
     obs.observe(storyVideo);
   }
+
+  /* ── SCROLL CONTAINER: Ensure momentum scrolling ── */
+  const invitation = document.getElementById('invitation');
+  invitation.addEventListener('touchmove', function(e) {
+    // Ensure we're not preventing scroll on the container itself
+    if (e.target === invitation || invitation.contains(e.target)) {
+      // Allow natural scrolling — don't preventDefault
+    }
+  }, { passive: true });
 
   /* ── RSVP BUTTON ── */
   const rsvpBtn = document.getElementById('rsvpBtn');
