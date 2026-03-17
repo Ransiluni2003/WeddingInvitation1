@@ -10,12 +10,12 @@
 
   :root {
     --cream: #f6fbf4;
-    --gold: #50C878;
-    --gold-light: #7EDEC0;
-    --gold-dark: #228B22;
-    --brown: #1B4D2D;
-    --text: #0D2B1F;
-    --accent: #50C878;
+    --gold: #D4AF37;
+    --gold-light: #4A90E2;
+    --gold-dark: #1a3a6b;
+    --brown: #0f1f3f;
+    --text: #1a3a6b;
+    --accent: #D4AF37;
     /* Safe area insets for iPhone notch/home bar */
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --safe-top: env(safe-area-inset-top, 0px);
@@ -82,7 +82,7 @@
     font-family: "Lato", sans-serif; font-weight: 300;
     font-size: clamp(0.6rem, 1.5vw, 0.8rem);
     letter-spacing: 0.4em; text-transform: uppercase;
-    color: rgba(126,222,192,0.85); margin-bottom: 0.8rem;
+    color: rgba(74,144,226,0.85); margin-bottom: 0.8rem;
   }
   .video-title-names {
     font-family: "Cinzel", serif;
@@ -94,12 +94,12 @@
   .video-title-amp {
     font-family: "Cormorant Garamond", serif;
     font-style: italic; font-size: 0.65em;
-    color: #50C878; display: block; margin: -0.05em 0;
+    color: #D4AF37; display: block; margin: -0.05em 0;
   }
   .video-title-date {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.9rem, 2.5vw, 1.3rem);
-    color: rgba(126,222,192,0.9);
+    color: rgba(74,144,226,0.9);
     margin-top: 0.7rem; letter-spacing: 0.15em;
   }
 
@@ -114,7 +114,7 @@
     position: relative;
     padding: 1.1rem 3.5rem;
     background: transparent;
-    border: 1px solid rgba(126,222,192,0.7);
+    border: 1px solid rgba(74,144,226,0.7);
     color: #fff;
     font-family: "Cinzel", serif;
     font-size: clamp(0.75rem, 2vw, 0.95rem);
@@ -132,15 +132,15 @@
   .tap-btn::before {
     content: "";
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(80,200,120,0.15), rgba(80,200,120,0.4));
+    background: linear-gradient(135deg, rgba(74,144,226,0.15), rgba(74,144,226,0.4));
     opacity: 0; transition: opacity 0.3s;
   }
   .tap-btn:hover::before, .tap-btn:active::before { opacity: 1; }
-  .tap-btn:hover, .tap-btn:active { border-color: rgba(126,222,192,1); }
+  .tap-btn:hover, .tap-btn:active { border-color: rgba(74,144,226,1); }
 
   .tap-ring {
     position: absolute; width: 100%; height: 100%;
-    border: 1px solid rgba(80,200,120,0.45);
+    border: 1px solid rgba(74,144,226,0.45);
     border-radius: 2px;
     animation: ringPulse 2.2s ease-out infinite;
     pointer-events: none;
@@ -155,7 +155,7 @@
   .tap-hint {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-    color: rgba(126,222,192,0.7); letter-spacing: 0.1em;
+    color: rgba(74,144,226,0.7); letter-spacing: 0.1em;
   }
 
   @keyframes fadeUp {
@@ -233,7 +233,7 @@
     font-family: "Lato", sans-serif; font-weight: 300;
     font-size: clamp(0.65rem, 1.5vw, 0.78rem);
     letter-spacing: 0.35em; text-transform: uppercase;
-    color: #228B22; margin-bottom: 1.2rem;
+    color: #4A90E2; margin-bottom: 1.2rem;
     animation: fadeUp 0.8s ease 0.3s both;
   }
   .inv-logo {
@@ -245,7 +245,7 @@
   .inv-together {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(1rem, 2.5vw, 1.25rem);
-    color: #228B22; font-weight: 300; letter-spacing: 0.08em;
+    color: #4A90E2; font-weight: 300; letter-spacing: 0.08em;
     animation: fadeUp 0.8s ease 0.4s both;
   }
   .inv-names {
@@ -257,7 +257,7 @@
   }
   .inv-names .ampersand {
     font-family: "Cormorant Garamond", serif; font-style: italic;
-    font-size: 0.7em; color: #50C878;
+    font-size: 0.7em; color: #D4AF37;
     display: block; margin: -0.1em 0;
   }
   .ornament-line {
@@ -265,13 +265,13 @@
     width: 100%; max-width: 400px; margin: 1.5rem auto;
     animation: fadeUp 0.8s ease 0.6s both;
   }
-  .ornament-line hr { flex: 1; border: none; border-top: 1px solid #50C878; }
-  .ornament-line span { color: #50C878; font-size: 1.1rem; }
+  .ornament-line hr { flex: 1; border: none; border-top: 1px solid #D4AF37; }
+  .ornament-line span { color: #D4AF37; font-size: 1.1rem; }
 
   .inv-request {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.9rem, 2.2vw, 1.15rem);
-    color: #1B4D2D; line-height: 1.8; max-width: 420px;
+    color: #1a3a6b; line-height: 1.8; max-width: 420px;
     animation: fadeUp 0.8s ease 0.7s both;
   }
   .inv-date-block { margin: 2.5rem 0 2rem; animation: fadeUp 0.8s ease 0.8s both; }
@@ -283,7 +283,7 @@
   .inv-year {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(1rem, 2.5vw, 1.3rem);
-    color: #228B22; letter-spacing: 0.2em;
+    color: #1a3a6b; letter-spacing: 0.2em;
     display: block; margin-top: 0.2rem;
   }
 
@@ -295,20 +295,20 @@
   @media (max-width: 480px) { .info-grid { grid-template-columns: 1fr; } }
 
   .info-card {
-    background: rgba(80,200,120,0.07);
-    border: 1px solid rgba(80,200,120,0.25);
+    background: rgba(74,144,226,0.07);
+    border: 1px solid rgba(74,144,226,0.25);
     border-radius: 8px; padding: 1.5rem 1.2rem;
     position: relative; overflow: hidden;
   }
   .info-card::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(to right, transparent, #50C878, transparent);
+    background: linear-gradient(to right, transparent, #D4AF37, transparent);
   }
   .info-card-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
   .info-card-label {
     font-family: "Lato", sans-serif; font-size: 0.65rem;
     letter-spacing: 0.3em; text-transform: uppercase;
-    color: #228B22; margin-bottom: 0.4rem;
+    color: #1a3a6b; margin-bottom: 0.4rem;
   }
   .info-card-value {
     font-family: "Cormorant Garamond", serif;
@@ -323,20 +323,20 @@
   .rsvp-title {
     font-family: "Cinzel", serif;
     font-size: clamp(0.9rem, 2vw, 1.1rem);
-    letter-spacing: 0.3em; color: #228B22; margin-bottom: 1.2rem;
+    letter-spacing: 0.3em; color: #1a3a6b; margin-bottom: 1.2rem;
   }
   .rsvp-note {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.85rem, 2vw, 1rem);
-    color: #1B4D2D; margin-bottom: 1.2rem; line-height: 1.6;
+    color: #0f1f3f; margin-bottom: 1.2rem; line-height: 1.6;
   }
   .rsvp-btn {
     display: inline-block; padding: 0.85rem 2.5rem;
-    background: linear-gradient(135deg, #228B22, #50C878);
+    background: linear-gradient(135deg, #1a3a6b, #4A90E2);
     color: white; font-family: "Cinzel", serif; font-size: 0.8rem;
     letter-spacing: 0.25em; text-transform: uppercase;
     border-radius: 2px; border: none; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(34,139,34,0.3);
+    box-shadow: 0 4px 20px rgba(74,144,226,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
@@ -345,7 +345,7 @@
     -webkit-appearance: none;
     appearance: none;
   }
-  .rsvp-btn:hover, .rsvp-btn:active { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,139,34,0.4); }
+  .rsvp-btn:hover, .rsvp-btn:active { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,144,226,0.4); }
 
   /* ===== GETTING MARRIED SECTION ===== */
   .getting-married-section {
@@ -361,7 +361,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #228B22;
+    color: #1a3a6b;
     margin-bottom: 0.5rem;
   }
   .gm-heading {
@@ -372,27 +372,27 @@
     margin-bottom: 1.2rem;
   }
   .gm-location-title {
-    color: #50C878;
+    color: #D4AF37;
     font-family: "Cormorant Garamond", serif;
     font-size: 1.35rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
   .gm-body {
-    background: #E8F5E9;
+    background: #E6F2FF;
     border-radius: 14px;
     padding: 22px 26px;
     font-family: "Lato", sans-serif;
     font-size: 0.9rem;
     line-height: 1.85;
-    color: #1B4D2D;
+    color: #0f1f3f;
     text-align: center;
   }
   .gm-signature {
     font-family: "Cormorant Garamond", serif;
     font-style: italic;
     font-size: 1.5rem;
-    color: #50C878;
+    color: #D4AF37;
     margin-top: 1.6rem;
     letter-spacing: 0.04em;
   }
@@ -410,14 +410,14 @@
     font-size: 0.72rem;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: #228B22;
+    color: #1a3a6b;
     margin: 1rem 0 1.2rem;
   }
   .video-frame {
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 12px 48px rgba(34,139,34,0.22);
-    border: 2px solid rgba(80,200,120,0.3);
+    box-shadow: 0 12px 48px rgba(74,144,226,0.22);
+    border: 2px solid rgba(74,144,226,0.3);
     background: #000;
   }
   .map-embed {
@@ -429,7 +429,7 @@
   }
   .gm-address {
     margin-top: 0.6rem;
-    color: #1B4D2D;
+    color: #0f1f3f;
   }
 
   .inv-closing {
@@ -439,7 +439,7 @@
   .inv-closing-text {
     font-family: "Cormorant Garamond", serif; font-style: italic;
     font-size: clamp(0.85rem, 2vw, 1rem);
-    color: #228B22; letter-spacing: 0.1em; line-height: 2;
+    color: #1a3a6b; letter-spacing: 0.1em; line-height: 2;
   }
 
   /* ===== THANK YOU PAGE ===== */
@@ -450,7 +450,7 @@
     margin-bottom: calc(-1 * (clamp(2rem, 6vw, 5rem) + 100px + var(--safe-bottom)));
     padding: clamp(4rem, 12vw, 8rem) clamp(1.25rem, 4vw, 4rem);
     padding-bottom: calc(clamp(4rem, 12vw, 8rem) + var(--safe-bottom));
-    background: linear-gradient(135deg, #228B22 0%, #1B6B1F 50%, #156B15 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #0f1f3f 50%, #0a132a 100%);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -483,19 +483,19 @@
     gap: 15px; margin-top: 25px; flex-wrap: wrap;
   }
   .count-card {
-    background: rgba(80,200,120,0.08);
-    border: 1px solid rgba(80,200,120,0.35);
+    background: rgba(74,144,226,0.08);
+    border: 1px solid rgba(74,144,226,0.35);
     border-radius: 10px; padding: 15px 20px;
     min-width: 80px; text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
   }
   .count-card span {
     display: block; font-family: "Cinzel", serif;
-    font-size: 28px; color: #0D2B1F;
+    font-size: 28px; color: #000033;
   }
   .count-card p {
     font-family: "Lato", sans-serif; font-size: 11px;
-    letter-spacing: 2px; color: #228B22;
+    letter-spacing: 2px; color: #1a3a6b;
     text-transform: uppercase; margin-top: 4px;
   }
 
@@ -523,9 +523,9 @@
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    background: linear-gradient(145deg, #50C878, #228B22);
+    background: linear-gradient(145deg, #4A90E2, #1a3a6b);
     box-shadow:
-      0 8px 32px rgba(34,139,34,0.55),
+      0 8px 32px rgba(74,144,226,0.55),
       0 2px 0 rgba(255,255,255,0.15) inset,
       0 -2px 0 rgba(0,0,0,0.2) inset;
     display: flex;
@@ -543,7 +543,7 @@
   }
   #musicBtn:active {
     transform: scale(0.93);
-    box-shadow: 0 4px 16px rgba(34,139,34,0.55);
+    box-shadow: 0 4px 16px rgba(74,144,226,0.55);
   }
 
   /* Spinning ring when playing */
@@ -553,8 +553,8 @@
     inset: 4px;
     border-radius: 50%;
     border: 1.5px solid transparent;
-    border-top-color: rgba(126,222,192,0.9);
-    border-right-color: rgba(126,222,192,0.4);
+    border-top-color: rgba(212,175,55,0.9);
+    border-right-color: rgba(212,175,55,0.4);
     animation: spinVinyl 2.4s linear infinite;
     opacity: 0;
     transition: opacity 0.4s;
@@ -571,7 +571,7 @@
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    border: 2px solid rgba(80,200,120,0.6);
+    border: 2px solid rgba(74,144,226,0.6);
     opacity: 0;
     pointer-events: none;
   }
@@ -618,7 +618,7 @@
     background: rgba(255,255,255,0.95);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1.5px solid rgba(80,200,120,0.18);
+    border: 1.5px solid rgba(74,144,226,0.18);
     border-radius: 12px;
     padding: 14px 14px 12px;
     display: flex;
@@ -642,7 +642,7 @@
     font-size: 0.55rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #228B22;
+    color: #1a3a6b;
   }
   #vol-slider {
     -webkit-appearance: slider-vertical;
@@ -663,24 +663,24 @@
   #vol-slider::-webkit-slider-runnable-track {
     width: 4px;
     background: linear-gradient(to bottom,
-      rgba(80,200,120,0.15) 0%,
-      #50C878 100%);
+      rgba(74,144,226,0.15) 0%,
+      #D4AF37 100%);
     border-radius: 3px;
   }
   #vol-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 16px; height: 16px;
     border-radius: 50%;
-    background: #50C878;
+    background: #D4AF37;
     border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(34,139,34,0.4);
+    box-shadow: 0 2px 8px rgba(74,144,226,0.4);
     cursor: pointer;
     margin-left: -6px;
   }
   #vol-slider::-moz-range-thumb {
     width: 16px; height: 16px;
     border-radius: 50%;
-    background: #50C878;
+    background: #D4AF37;
     border: 2px solid #fff;
     cursor: pointer;
   }
@@ -690,7 +690,7 @@
     position: absolute;
     bottom: calc(100% + 10px);
     right: 0;
-    background: rgba(13,43,31,0.88);
+    background: rgba(26,58,107,0.88);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: rgba(255,255,255,0.9);
@@ -711,7 +711,7 @@
     position: absolute;
     top: 100%; right: 18px;
     border: 5px solid transparent;
-    border-top-color: rgba(13,43,31,0.88);
+    border-top-color: rgba(26,58,107,0.88);
   }
   /* Show tooltip on desktop hover */
   @media (hover: hover) {
@@ -790,30 +790,30 @@
 
   <div class="corner tl">
     <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#c9a84c" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <circle cx="5" cy="5" r="2" fill="#c9a84c" opacity="0.8"/>
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#D4AF37" opacity="0.8"/>
     </svg>
   </div>
   <div class="corner tr">
     <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <circle cx="5" cy="5" r="2" fill="#50C878" opacity="0.8"/>
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#D4AF37" opacity="0.8"/>
     </svg>
   </div>
   <div class="corner bl">
     <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <circle cx="5" cy="5" r="2" fill="#50C878" opacity="0.8"/>
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#D4AF37" opacity="0.8"/>
     </svg>
   </div>
   <div class="corner br">
     <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#50C878" stroke-width="0.8" fill="none" opacity="0.6"/>
-      <circle cx="5" cy="5" r="2" fill="#50C878" opacity="0.8"/>
+      <path d="M5 5 L5 35 Q5 55 25 55" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <path d="M5 5 L35 5 Q55 5 55 25" stroke="#D4AF37" stroke-width="0.8" fill="none" opacity="0.6"/>
+      <circle cx="5" cy="5" r="2" fill="#D4AF37" opacity="0.8"/>
     </svg>
   </div>
 
@@ -896,7 +896,7 @@
         <p class="gm-label">Way to the</p>
         <h2 class="gm-heading">Location</h2>
         <h3 class="gm-location-title">Thurya Hotel</h3>
-        <h4 class="gm-address" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#1B4D2D;margin-bottom:4px;">Grand Ballroom</h4>
+        <h4 class="gm-address" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#0f1f3f;margin-bottom:4px;">Grand Ballroom</h4>
         <p class="gm-address">Kudawaskaduwa, Waskaduwa, Kalutara</p>
         <iframe
           class="map-embed"
@@ -1001,7 +1001,7 @@
 
   /* ── PARTICLES ── */
   function initParticles() {
-    const colors = ['#50C878','#7EDEC0','#228B22','#1B4D2D','#7EDEC0'];
+    const colors = ['#4A90E2','#1a3a6b','#D4AF37','#0f1f3f','#D4AF37'];
     const container = document.getElementById('particles');
     for (let i = 0; i < 22; i++) {
       const p = document.createElement('div');
