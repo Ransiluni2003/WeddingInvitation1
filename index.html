@@ -41,14 +41,147 @@
 
   /* ===== VIDEO SCREEN ===== */
   #video-screen {
-    position: fixed; inset: 0; z-index: 100;
-    display: flex; flex-direction: column;
+    position: fixed; inset: 0; z-index: -1;
+    display: none;
+    flex-direction: column;
     align-items: center; justify-content: flex-end;
     transition: opacity 1s ease, transform 1.2s ease;
     -webkit-user-select: none;
     user-select: none;
   }
   #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; z-index: -1; }
+
+  /* ===== HEART SCREEN ===== */
+  #heart-screen {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a2847 100%);
+    transition: opacity 1s ease, transform 1s ease;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  #heart-screen.hide { opacity: 0; transform: scale(0.95); pointer-events: none; z-index: -1; }
+
+  .heart-screen-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: clamp(2rem, 5vw, 3rem);
+  }
+
+  /* ===== ENVELOPE SCREEN ===== */
+  #envelope-screen {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 1s ease;
+    -webkit-user-select: none;
+    user-select: none;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  #envelope-screen.show {
+    opacity: 1;
+    pointer-events: all;
+    z-index: 100;
+  }
+
+  #envelope-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; z-index: 0;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .envelope-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(0,0,0,0.1) 0%,
+      rgba(0,0,0,0.05) 35%,
+      rgba(0,0,0,0.5) 70%,
+      rgba(0,0,0,0.78) 100%);
+    z-index: 1;
+  }
+
+  .envelope-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    height: 100%;
+  }
+
+  .envelope-hint {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: rgba(201,168,76,0.85);
+    letter-spacing: 0.1em;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .envelope-text {
+    display: none;
+  }
+
+  .envelope-open-btn {
+    display: inline-block;
+    padding: 1.4rem 4rem;
+    background: transparent;
+    border: 2px solid rgba(201,168,76,0.9);
+    color: #fff;
+    font-family: "Cinzel", serif;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 0;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    animation: fadeUp 1s ease 0.5s both, buttonPulse 2.5s ease-in-out infinite;
+    margin-top: 32rem;
+  }
+  .envelope-open-btn::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.4));
+    opacity: 0; transition: opacity 0.3s;
+    z-index: -1;
+  }
+  .envelope-open-btn:hover::before, .envelope-open-btn:active::before { opacity: 1; }
+  .envelope-open-btn:hover, .envelope-open-btn:active { 
+    border-color: rgba(201,168,76,1);
+    transform: translateY(-2px);
+  }
+
+  @keyframes buttonPulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(201,168,76,0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(201,168,76,0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(201,168,76,0);
+    }
+  }
 
   #bg-video {
     position: absolute; inset: 0;
@@ -763,6 +896,124 @@
     .count-card { min-width: 70px; padding: 12px 14px; }
     .count-card span { font-size: 22px; }
   }
+
+  /* ===== HEART WITH NAMES ===== */
+  .heart-container {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    animation: fadeUp 1.4s ease 0.8s both;
+    cursor: pointer;
+  }
+
+  .heart-screen-content .heart-container {
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .heart-svg-wrap {
+    width: clamp(160px, 35vw, 280px);
+    height: clamp(160px, 35vw, 280px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .heart-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 8px 32px rgba(201,168,76,0.3));
+    transition: filter 0.3s ease;
+  }
+
+  .heart-container:hover .heart-svg {
+    filter: drop-shadow(0 12px 48px rgba(201,168,76,0.6));
+  }
+
+  .heart-path {
+    stroke: rgba(201,168,76,0.9);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: drawHeart 3s ease-in-out infinite;
+  }
+
+  @keyframes drawHeart {
+    0% {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    50% {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 0;
+      opacity: 0.8;
+    }
+  }
+
+  .heart-content-text {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .heart-names {
+    font-family: "Cinzel", serif;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 400;
+    color: rgba(201,168,76,0.95);
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+  }
+
+  .heart-amp {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 0.7em;
+    display: block;
+    margin: -0.05em 0;
+  }
+
+  .heart-tap-hint {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+    color: rgba(201,168,76,0.7);
+    letter-spacing: 0.1em;
+    margin-top: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  .heart-screen-content .tap-btn {
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
 </style>
 </head>
 <body>
@@ -779,7 +1030,49 @@
       <div class="tap-ring"></div>
       <div class="tap-ring"></div>
       <div class="tap-ring"></div>
-      ✦ &nbsp;Tap to Open
+      ✦ &nbsp;Open Envelope
+    </button>
+  </div>
+</div>
+
+<!-- ===== HEART SCREEN ===== -->
+<div id="heart-screen">
+  <div class="heart-screen-content">
+    <div class="heart-container" id="heartBtn">
+      <div class="heart-svg-wrap">
+        <svg class="heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path class="heart-path" d="M50,95 C25,80 5,60 5,40 C5,25 15,15 25,15 C35,15 45,25 50,35 C55,25 65,15 75,15 C85,15 95,25 95,40 C95,60 75,80 50,95 Z"/>
+        </svg>
+        <div class="heart-content-text">
+          <div class="heart-names">
+            Chamith
+            <span class="heart-amp">&</span>
+            Vihanga
+          </div>
+        </div>
+      </div>
+      <div class="heart-tap-hint">Tap the heart to open</div>
+    </div>
+<!-- 
+    <button class="tap-btn" id="tapBtn2">
+      <div class="tap-ring"></div>
+      <div class="tap-ring"></div>
+      <div class="tap-ring"></div>
+      ✦ &nbsp;Open Envelope
+    </button> -->
+  </div>
+</div>
+
+<!-- ===== ENVELOPE SCREEN ===== -->
+<div id="envelope-screen">
+  <video id="envelope-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="0312.mp4" type="video/mp4">
+  </video>
+  <div class="envelope-overlay"></div>
+
+  <div class="envelope-content">
+    <button class="envelope-open-btn" id="openEnvelopeBtn">
+      ✦ &nbsp;Open Envelope
     </button>
   </div>
 </div>
@@ -951,7 +1244,20 @@
 (function() {
   /* ── ENTER SITE ── */
   function enterSite() {
-    document.getElementById('video-screen').classList.add('hide');
+    document.getElementById('heart-screen').classList.add('hide');
+    document.getElementById('envelope-screen').classList.add('show');
+    
+    // Auto-play envelope video
+    const envelopeVideo = document.getElementById('envelope-video');
+    if (envelopeVideo) {
+      envelopeVideo.play().catch(() => {
+        // Fallback if autoplay is blocked
+      });
+    }
+  }
+
+  function openInvitation() {
+    document.getElementById('envelope-screen').classList.remove('show');
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
@@ -977,27 +1283,43 @@
     });
   }
 
-  /* ── TAP BUTTON ── */
-  const tapBtn = document.getElementById('tapBtn');
-  // Use both click and touchend to cover iOS properly
+  /* ── HEART BUTTON AND BUTTONS ── */
+  const heartBtn = document.getElementById('heartBtn');
+  const tapBtn2 = document.getElementById('tapBtn2');
+  const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
   let entered = false;
-  function doEnter(e) {
-    if (entered) return;
-    entered = true;
-    if (e.preventDefault) e.preventDefault();
-    enterSite();
-  }
-  tapBtn.addEventListener('click', doEnter);
-  tapBtn.addEventListener('touchend', doEnter, { passive: false });
-  if ('PointerEvent' in window) {
-    tapBtn.addEventListener('pointerdown', function(e) {
-      if (e.isPrimary && !entered) {
-        e.preventDefault();
-        entered = true;
-        enterSite();
-      }
+
+  function attachEventListeners(element, callback) {
+    if (!element) return;
+    element.addEventListener('click', callback);
+    element.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      callback(e);
     }, { passive: false });
+    if ('PointerEvent' in window) {
+      element.addEventListener('pointerdown', function(e) {
+        if (e.isPrimary) {
+          e.preventDefault();
+          callback(e);
+        }
+      }, { passive: false });
+    }
   }
+
+  attachEventListeners(heartBtn, (e) => {
+    e.preventDefault();
+    enterSite();
+  });
+
+  attachEventListeners(tapBtn2, (e) => {
+    e.preventDefault();
+    enterSite();
+  });
+
+  attachEventListeners(openEnvelopeBtn, (e) => {
+    e.preventDefault();
+    openInvitation();
+  });
 
   /* ── PARTICLES ── */
   function initParticles() {
