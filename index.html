@@ -28,7 +28,6 @@
     background: #000;
     overflow: hidden;
     /* Prevent iOS bounce scroll on body */
-    overscroll-behavior: none;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
@@ -49,7 +48,7 @@
     -webkit-user-select: none;
     user-select: none;
   }
-  #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; }
+  #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; z-index: -1; }
 
   #bg-video {
     position: absolute; inset: 0;
@@ -174,16 +173,14 @@
     z-index: 50;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(40px);
-    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
     background: var(--cream);
     -webkit-user-select: text;
     user-select: text;
+    /* NO transform/transition on this container — breaks iOS scroll! */
   }
   #invitation.show {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(0);
     /* Pad bottom for iPhone home indicator */
     padding-bottom: var(--safe-bottom);
     /* Ensure scroll is not locked */
@@ -212,6 +209,8 @@
     /* Extra bottom padding for iPhone home bar */
     padding-bottom: calc(clamp(2rem, 6vw, 5rem) + 100px + var(--safe-bottom));
     position: relative;
+    /* Ensure content has proper scroll context */
+    will-change: auto;
   }
   .inv-page::before {
     content: "";
@@ -921,15 +920,8 @@
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
-    // Reset scroll position
+    // Reset scroll position immediately
     inv.scrollTop = 0;
-    // Force redraw of scroll momentum
-    setTimeout(() => {
-      inv.style.webkitOverflowScrolling = 'auto';
-      setTimeout(() => {
-        inv.style.webkitOverflowScrolling = 'touch';
-      }, 10);
-    }, 100);
     initParticles();
     tryPlayMusic();
   }
@@ -1052,11 +1044,14 @@
   /* Long-press on mobile to show volume panel */
   let longPressTimer;
   let longPressing = false;
-  musicBtn.addEventListener('touchstart', function() {
-    longPressTimer = setTimeout(() => {
-      longPressing = true;
-      volWrap.classList.add('visible');
-    }, 500);
+  musicBtn.addEventListener('touchstart', function(e) {
+    // Don't start long-press timer if touch is not directly on button
+    if (e.target.closest('#musicBtn')) {
+      longPressTimer = setTimeout(() => {
+        longPressing = true;
+        volWrap.classList.add('visible');
+      }, 500);
+    }
   }, { passive: true });
   musicBtn.addEventListener('touchend', function() {
     clearTimeout(longPressTimer);
@@ -1082,15 +1077,6 @@
     obs.observe(storyVideo);
   }
 
-  /* ── SCROLL CONTAINER: Ensure momentum scrolling ── */
-  const invitation = document.getElementById('invitation');
-  invitation.addEventListener('touchmove', function(e) {
-    // Ensure we're not preventing scroll on the container itself
-    if (e.target === invitation || invitation.contains(e.target)) {
-      // Allow natural scrolling — don't preventDefault
-    }
-  }, { passive: true });
-
   /* ── RSVP BUTTON ── */
   const rsvpBtn = document.getElementById('rsvpBtn');
   if (rsvpBtn) {
@@ -1100,6 +1086,12 @@
       window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');
     }, false);
   }
+
+  /* ── PASSIVE SCROLL SUPPORT ── */
+  // Critical: Add passive listener to allow iOS momentum scroll
+  document.addEventListener('touchmove', function() {
+    // Empty handler with passive:true allows iOS to optimize scroll
+  }, { passive: true });
 })();
 </script>
 </body>
