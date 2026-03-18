@@ -16,7 +16,6 @@
     --brown: #0f1f3f;
     --text: #1a3a6b;
     --accent: #D4AF37;
-    /* Safe area insets for iPhone notch/home bar */
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --safe-top: env(safe-area-inset-top, 0px);
   }
@@ -27,19 +26,17 @@
     font-family: "Lato", sans-serif;
     background: #000;
     overflow: hidden;
-    /* Prevent iOS bounce scroll on body */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
   }
   body.invitation-open {
-    overflow: hidden; /* Keep hidden — we scroll #invitation instead */
+    overflow: hidden;
     background: var(--cream);
     -webkit-user-select: none;
     user-select: none;
   }
 
-  /* ===== VIDEO SCREEN ===== */
   #video-screen {
     position: fixed; inset: 0; z-index: -1;
     display: none;
@@ -51,7 +48,6 @@
   }
   #video-screen.hide { opacity: 0; transform: scale(1.06); pointer-events: none; z-index: -1; }
 
-  /* ===== HEART SCREEN ===== */
   #heart-screen {
     position: fixed; inset: 0; z-index: 100;
     display: flex; flex-direction: column;
@@ -70,9 +66,10 @@
     justify-content: center;
     gap: 2rem;
     padding: clamp(2rem, 5vw, 3rem);
+    height: 100%;
+    min-height: 100vh;
   }
 
-  /* ===== ENVELOPE SCREEN ===== */
   #envelope-screen {
     position: fixed; inset: 0; z-index: 100;
     display: flex; flex-direction: column;
@@ -130,9 +127,7 @@
     animation: fadeUp 1s ease 0.3s both;
   }
 
-  .envelope-text {
-    display: none;
-  }
+  .envelope-text { display: none; }
 
   .envelope-open-btn {
     display: inline-block;
@@ -166,28 +161,15 @@
     z-index: -1;
   }
   .envelope-open-btn:hover::before, .envelope-open-btn:active::before { opacity: 1; }
-  .envelope-open-btn:hover, .envelope-open-btn:active { 
+  .envelope-open-btn:hover, .envelope-open-btn:active {
     border-color: rgba(201,168,76,1);
     transform: translateY(-2px);
   }
 
-  @media (max-width: 768px) {
-    .envelope-open-btn {
-      padding: 1rem 2.5rem;
-      font-size: clamp(0.7rem, 1.8vw, 0.85rem);
-    }
-  }
-
   @keyframes buttonPulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(201,168,76,0.7);
-    }
-    50% {
-      box-shadow: 0 0 0 10px rgba(201,168,76,0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(201,168,76,0);
-    }
+    0% { box-shadow: 0 0 0 0 rgba(201,168,76,0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(201,168,76,0); }
+    100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
   }
 
   #bg-video {
@@ -261,7 +243,6 @@
     letter-spacing: 0.35em; text-transform: uppercase;
     cursor: pointer; border-radius: 2px; overflow: hidden;
     transition: border-color 0.3s, background 0.3s;
-    /* Fix iOS button tap highlight */
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     -webkit-user-select: none;
@@ -303,11 +284,9 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ===== INVITATION PAGE ===== */
   #invitation {
     position: fixed;
     inset: 0;
-    /* Use overflow-y scroll with momentum on iOS */
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     z-index: 50;
@@ -316,19 +295,15 @@
     background: var(--cream);
     -webkit-user-select: text;
     user-select: text;
-    /* NO transform/transition on this container — breaks iOS scroll! */
   }
   #invitation.show {
     opacity: 1;
     pointer-events: all;
-    /* Pad bottom for iPhone home indicator */
     padding-bottom: var(--safe-bottom);
-    /* Ensure scroll is not locked */
     overflow-y: scroll !important;
     -webkit-overflow-scrolling: touch !important;
   }
 
-  /* Particles */
   #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
   .petal {
     position: absolute; opacity: 0;
@@ -346,14 +321,11 @@
     max-width: min(900px, 92vw);
     margin: 0 auto;
     padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 4rem);
-    /* Extra bottom padding for iPhone home bar */
     padding-bottom: calc(clamp(2rem, 6vw, 5rem) + 100px + var(--safe-bottom));
     position: relative;
-    /* Ensure content has proper scroll context */
     will-change: auto;
   }
 
-/* Corner SVG ornaments */
   .corner {
     position: fixed; width: 60px; height: 60px;
     z-index: 2; pointer-events: none;
@@ -490,7 +462,6 @@
   }
   .rsvp-btn:hover, .rsvp-btn:active { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,144,226,0.4); }
 
-  /* ===== GETTING MARRIED SECTION ===== */
   .getting-married-section {
     margin-top: 3rem;
     width: 100%;
@@ -585,7 +556,6 @@
     color: #1a3a6b; letter-spacing: 0.1em; line-height: 2;
   }
 
-  /* ===== THANK YOU PAGE ===== */
   .thank-you-section {
     margin-top: 3rem;
     margin-left: calc(-1 * clamp(1.25rem, 4vw, 4rem));
@@ -620,7 +590,6 @@
     max-width: 500px;
   }
 
-  /* ===== COUNTDOWN ===== */
   .countdown-container {
     display: flex; justify-content: center;
     gap: 15px; margin-top: 25px; flex-wrap: wrap;
@@ -643,16 +612,246 @@
   }
 
   /* ===========================
-     MUSIC BUTTON — MOBILE FIXED
-     Fixed position, always visible,
-     safe area aware for iPhone
+     EVENT SCHEDULE — REDESIGNED
+  =========================== */
+  .schedule-section {
+    width: 100%;
+    max-width: 580px;
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  .schedule-subtitle {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: #1a3a6b;
+    opacity: 0.75;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  /* Outer wrapper — vertical gold line runs through left column */
+  .ev-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin-top: 1.5rem;
+  }
+
+  /* Single event row */
+  .ev-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0 16px;
+    align-items: stretch;
+    opacity: 0;
+    transform: translateX(-28px);
+    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
+  }
+  .ev-row.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Left column: number badge + vertical line ── */
+  .ev-spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Numbered badge */
+  .ev-badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #1a3a6b 0%, #4A90E2 100%);
+    border: 2px solid #D4AF37;
+    box-shadow: 0 0 0 4px rgba(212,175,55,0.15), 0 6px 20px rgba(26,58,107,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .ev-row:hover .ev-badge {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(212,175,55,0.25), 0 8px 24px rgba(26,58,107,0.45);
+  }
+  .ev-badge-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    gap: 1px;
+  }
+  .ev-badge-icon {
+    font-size: 17px;
+    line-height: 1;
+  }
+  .ev-badge-num {
+    font-family: "Cinzel", serif;
+    font-size: 8px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+  }
+
+  /* Gold pulse ring on badge */
+  .ev-badge::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(212,175,55,0.55);
+    opacity: 0;
+    animation: evRing 3.5s ease-out infinite;
+  }
+  @keyframes evRing {
+    0%   { transform: scale(0.85); opacity: 0.8; }
+    100% { transform: scale(1.55); opacity: 0; }
+  }
+
+  /* Vertical connector line */
+  .ev-line {
+    flex: 1;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(212,175,55,0.55), rgba(212,175,55,0.15));
+    margin: 4px 0;
+    min-height: 20px;
+  }
+  .ev-row:last-child .ev-line { display: none; }
+
+  /* ── Right column: the event card ── */
+  .ev-card {
+    background: rgba(255,255,255,0.78);
+    border: 1px solid rgba(212,175,55,0.22);
+    border-radius: 12px;
+    padding: 16px 20px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(26,58,107,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    text-align: left;
+  }
+  .ev-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 28px rgba(212,175,55,0.16), 0 2px 8px rgba(26,58,107,0.08);
+    border-color: rgba(212,175,55,0.5);
+  }
+
+  /* Decorative left accent bar */
+  .ev-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 16%; bottom: 16%;
+    width: 3px;
+    background: linear-gradient(to bottom, transparent, #D4AF37, transparent);
+    border-radius: 0 2px 2px 0;
+    opacity: 0.7;
+  }
+
+  /* Subtle background watermark number */
+  .ev-card::after {
+    content: attr(data-num);
+    position: absolute;
+    right: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-family: "Cinzel", serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: rgba(26,58,107,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .ev-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .ev-step-label {
+    font-family: "Lato", sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #D4AF37;
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 20px;
+    padding: 2px 10px;
+    white-space: nowrap;
+  }
+
+  .ev-name {
+    font-family: "Cinzel", serif;
+    font-size: clamp(0.82rem, 2vw, 0.98rem);
+    font-weight: 500;
+    color: #1a3a6b;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    margin-bottom: 5px;
+  }
+
+  .ev-desc {
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: clamp(0.88rem, 2vw, 1rem);
+    color: #0f1f3f;
+    opacity: 0.72;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Sparkle animation */
+  @keyframes evSparkle {
+    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1.6) rotate(200deg); opacity: 0; }
+  }
+  .ev-sparkle {
+    position: absolute;
+    width: 7px; height: 7px;
+    background: #D4AF37;
+    clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    animation: evSparkle 0.75s ease both;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Line-draw animation for the vertical line on scroll in */
+  @keyframes lineGrow {
+    from { transform: scaleY(0); transform-origin: top; }
+    to   { transform: scaleY(1); transform-origin: top; }
+  }
+  .ev-row.animate-in .ev-line {
+    animation: lineGrow 0.5s ease 0.3s both;
+  }
+
+  @media (max-width: 480px) {
+    .ev-timeline { gap: 0; }
+    .ev-card { padding: 14px 16px 16px; }
+    .ev-badge { width: 40px; height: 40px; }
+    .ev-badge-icon { font-size: 15px; }
+    .ev-row { grid-template-columns: 48px 1fr; gap: 0 12px; }
+  }
+
+  /* ===========================
+     MUSIC BUTTON
   =========================== */
   #music-widget {
     position: fixed;
-    /* Account for iPhone home indicator */
     bottom: calc(24px + var(--safe-bottom));
     right: 24px;
-    z-index: 9999; /* Very high so it's always on top */
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -661,8 +860,7 @@
 
   #musicBtn {
     position: relative;
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -676,7 +874,6 @@
     justify-content: center;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    /* Prevent shrinking on iOS */
     flex-shrink: 0;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     -webkit-user-select: none;
@@ -684,221 +881,93 @@
     -webkit-appearance: none;
     appearance: none;
   }
-  #musicBtn:active {
-    transform: scale(0.93);
-    box-shadow: 0 4px 16px rgba(74,144,226,0.55);
-  }
-
-  /* Spinning ring when playing */
+  #musicBtn:active { transform: scale(0.93); box-shadow: 0 4px 16px rgba(74,144,226,0.55); }
   #musicBtn::before {
     content: '';
-    position: absolute;
-    inset: 4px;
+    position: absolute; inset: 4px;
     border-radius: 50%;
     border: 1.5px solid transparent;
     border-top-color: rgba(212,175,55,0.9);
     border-right-color: rgba(212,175,55,0.4);
     animation: spinVinyl 2.4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s;
+    opacity: 0; transition: opacity 0.4s;
   }
   #musicBtn.playing::before { opacity: 1; }
-  @keyframes spinVinyl {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-  }
-
-  /* Pulse ring when playing */
+  @keyframes spinVinyl { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   #musicBtn::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 2px solid rgba(74,144,226,0.6);
-    opacity: 0;
-    pointer-events: none;
+    content: ''; position: absolute; inset: -4px;
+    border-radius: 50%; border: 2px solid rgba(74,144,226,0.6);
+    opacity: 0; pointer-events: none;
   }
-  #musicBtn.playing::after {
-    animation: musicPulse 2s ease-out infinite;
-  }
+  #musicBtn.playing::after { animation: musicPulse 2s ease-out infinite; }
   @keyframes musicPulse {
-    0%   { transform: scale(1);    opacity: 0.8; }
-    100% { transform: scale(1.6);  opacity: 0; }
+    0%   { transform: scale(1);   opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
   }
 
-  /* Music bars icon */
-  .music-bars {
-    display: flex;
-    align-items: flex-end;
-    gap: 2.5px;
-    height: 20px;
-    padding-bottom: 1px;
-  }
-  .music-bars span {
-    display: block;
-    width: 3.5px;
-    background: #fff;
-    border-radius: 2px;
-    transform-origin: bottom;
-  }
+  .music-bars { display: flex; align-items: flex-end; gap: 2.5px; height: 20px; padding-bottom: 1px; }
+  .music-bars span { display: block; width: 3.5px; background: #fff; border-radius: 2px; transform-origin: bottom; }
   .music-bars:not(.paused) span:nth-child(1) { animation: bar1 0.7s ease-in-out infinite alternate; }
   .music-bars:not(.paused) span:nth-child(2) { animation: bar2 0.9s ease-in-out infinite alternate; animation-delay: 0.15s; }
   .music-bars:not(.paused) span:nth-child(3) { animation: bar3 0.6s ease-in-out infinite alternate; animation-delay: 0.05s; }
   .music-bars:not(.paused) span:nth-child(4) { animation: bar4 0.8s ease-in-out infinite alternate; animation-delay: 0.25s; }
-
   @keyframes bar1 { from { height: 4px; } to { height: 16px; } }
   @keyframes bar2 { from { height: 8px; } to { height: 14px; } }
   @keyframes bar3 { from { height: 5px; } to { height: 18px; } }
   @keyframes bar4 { from { height: 6px; } to { height: 11px; } }
-
   .music-bars.paused span { animation: none !important; height: 5px; opacity: 0.7; }
 
-  /* Volume panel (shows on hover/long-press) */
   #vol-slider-wrap {
-    position: absolute;
-    bottom: calc(100% + 12px);
-    right: 0;
+    position: absolute; bottom: calc(100% + 12px); right: 0;
     background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
     border: 1.5px solid rgba(74,144,226,0.18);
-    border-radius: 12px;
-    padding: 14px 14px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    pointer-events: none;
+    border-radius: 12px; padding: 14px 14px 12px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; pointer-events: none;
     transform: translateY(8px) scale(0.95);
     transition: opacity 0.3s, transform 0.3s;
     width: 52px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   }
-  #vol-slider-wrap.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0) scale(1);
-  }
-  #vol-slider-wrap label {
-    font-family: "Lato", sans-serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #1a3a6b;
-  }
-  #vol-slider {
-    -webkit-appearance: slider-vertical;
-    appearance: none;
-    background: transparent;
-    outline: none;
-    cursor: pointer;
-    writing-mode: vertical-lr;
-    direction: rtl;
-    width: 4px;
-    height: 70px;
-    /* Fallback for browsers that don't support vertical slider well */
-    accent-color: var(--gold);
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  /* Webkit track */
-  #vol-slider::-webkit-slider-runnable-track {
-    width: 4px;
-    background: linear-gradient(to bottom,
-      rgba(74,144,226,0.15) 0%,
-      #D4AF37 100%);
-    border-radius: 3px;
-  }
-  #vol-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: #D4AF37;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(74,144,226,0.4);
-    cursor: pointer;
-    margin-left: -6px;
-  }
-  #vol-slider::-moz-range-thumb {
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: #D4AF37;
-    border: 2px solid #fff;
-    cursor: pointer;
-  }
+  #vol-slider-wrap.visible { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+  #vol-slider-wrap label { font-family: "Lato", sans-serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #1a3a6b; }
+  #vol-slider { -webkit-appearance: slider-vertical; appearance: none; background: transparent; outline: none; cursor: pointer; writing-mode: vertical-lr; direction: rtl; width: 4px; height: 70px; accent-color: var(--gold); -webkit-user-select: none; user-select: none; }
+  #vol-slider::-webkit-slider-runnable-track { width: 4px; background: linear-gradient(to bottom, rgba(74,144,226,0.15) 0%, #D4AF37 100%); border-radius: 3px; }
+  #vol-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #D4AF37; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(74,144,226,0.4); cursor: pointer; margin-left: -6px; }
+  #vol-slider::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #D4AF37; border: 2px solid #fff; cursor: pointer; }
 
-  /* Tooltip label */
   #music-tooltip {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    right: 0;
-    background: rgba(26,58,107,0.88);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: rgba(255,255,255,0.9);
-    font-family: "Lato", sans-serif;
-    font-size: 0.68rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(4px);
-    transition: opacity 0.25s, transform 0.25s;
+    position: absolute; bottom: calc(100% + 10px); right: 0;
+    background: rgba(26,58,107,0.88); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: rgba(255,255,255,0.9); font-family: "Lato", sans-serif; font-size: 0.68rem;
+    letter-spacing: 0.18em; text-transform: uppercase; padding: 5px 12px;
+    border-radius: 4px; white-space: nowrap; opacity: 0; pointer-events: none;
+    transform: translateY(4px); transition: opacity 0.25s, transform 0.25s;
   }
-  #music-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%; right: 18px;
-    border: 5px solid transparent;
-    border-top-color: rgba(26,58,107,0.88);
-  }
-  /* Show tooltip on desktop hover */
+  #music-tooltip::after { content: ''; position: absolute; top: 100%; right: 18px; border: 5px solid transparent; border-top-color: rgba(26,58,107,0.88); }
   @media (hover: hover) {
-    #musicBtn:hover ~ #music-tooltip {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    #music-widget:hover #vol-slider-wrap {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-    }
+    #musicBtn:hover ~ #music-tooltip { opacity: 1; transform: translateY(0); }
+    #music-widget:hover #vol-slider-wrap { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
   }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .inv-page {
-      padding: 2rem 1.5rem 3rem;
-      padding-bottom: calc(3rem + 100px + var(--safe-bottom));
-    }
+    .inv-page { padding: 2rem 1.5rem 3rem; padding-bottom: calc(3rem + 100px + var(--safe-bottom)); }
     .inv-page::before { inset: 10px; }
     .video-title { top: 45%; width: 90%; }
     .tap-btn { padding: 0.9rem 2.2rem; letter-spacing: 0.2em; }
     .ornament-line { max-width: 300px; }
     .rsvp-btn { width: 100%; max-width: 280px; }
-    /* Music button slightly smaller on small phones */
     #musicBtn { width: 52px; height: 52px; }
   }
-
   @media (min-width: 1024px) {
-    .inv-page {
-      max-width: 980px;
-      padding: 4.5rem 4.5rem 5rem;
-    }
+    .inv-page { max-width: 980px; padding: 4.5rem 4.5rem 5rem; }
     .section-block { max-width: 640px; }
     .section-block--video { max-width: 420px; }
     .inv-request { max-width: 520px; }
   }
-
   @media (max-width: 480px) {
-    .inv-page {
-      padding: 1.8rem 1.1rem 2.6rem;
-      padding-bottom: calc(2.6rem + 100px + var(--safe-bottom));
-    }
+    .inv-page { padding: 1.8rem 1.1rem 2.6rem; padding-bottom: calc(2.6rem + 100px + var(--safe-bottom)); }
     .inv-date { font-size: 1.1rem; letter-spacing: 0.08em; }
     .inv-request { font-size: 0.95rem; }
     .gm-heading { font-size: 1.6rem; }
@@ -909,121 +978,31 @@
 
   /* ===== HEART WITH NAMES ===== */
   .heart-container {
-    position: relative;
-    z-index: 3;
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    animation: fadeUp 1.4s ease 0.8s both;
-    cursor: pointer;
+    position: relative; z-index: 3; margin-bottom: 2rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
+    animation: fadeUp 1.4s ease 0.8s both; cursor: pointer;
   }
-
-  .heart-screen-content .heart-container {
-    margin-bottom: 1.5rem;
-    animation: fadeUp 1s ease 0.3s both;
-  }
-
+  .heart-screen-content .heart-container { margin-bottom: 1.5rem; animation: fadeUp 1s ease 0.3s both; }
   .heart-svg-wrap {
-    width: clamp(160px, 35vw, 280px);
-    height: clamp(160px, 35vw, 280px);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: clamp(200px, 45vw, 340px); height: clamp(200px, 45vw, 340px);
+    position: relative; display: flex; align-items: center; justify-content: center;
   }
-
-  .heart-svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 8px 32px rgba(201,168,76,0.3));
-    transition: filter 0.3s ease;
-  }
-
-  .heart-container:hover .heart-svg {
-    filter: drop-shadow(0 12px 48px rgba(201,168,76,0.6));
-  }
-
-  .heart-path {
-    stroke: rgba(201,168,76,0.9);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    animation: drawHeart 3s ease-in-out infinite;
-  }
-
+  .heart-svg { width: 100%; height: 100%; filter: drop-shadow(0 8px 32px rgba(201,168,76,0.3)); transition: filter 0.3s ease; }
+  .heart-container:hover .heart-svg { filter: drop-shadow(0 12px 48px rgba(201,168,76,0.6)); }
+  .heart-path { stroke: rgba(201,168,76,0.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: drawHeart 3s ease-in-out infinite; }
   @keyframes drawHeart {
-    0% {
-      stroke-dasharray: 1200;
-      stroke-dashoffset: 1200;
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    50% {
-      stroke-dasharray: 1200;
-      stroke-dashoffset: 0;
-      opacity: 1;
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      stroke-dasharray: 1200;
-      stroke-dashoffset: 0;
-      opacity: 0.8;
-    }
+    0%   { stroke-dasharray: 1200; stroke-dashoffset: 1200; opacity: 0; }
+    10%  { opacity: 1; }
+    50%  { stroke-dasharray: 1200; stroke-dashoffset: 0; opacity: 1; }
+    90%  { opacity: 1; }
+    100% { stroke-dasharray: 1200; stroke-dashoffset: 0; opacity: 0.8; }
   }
-
-  .heart-content-text {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .heart-names {
-    font-family: "Cinzel", serif;
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
-    font-weight: 400;
-    color: rgba(201,168,76,0.95);
-    letter-spacing: 0.05em;
-    line-height: 1.2;
-  }
-
-  .heart-amp {
-    font-family: "Cormorant Garamond", serif;
-    font-style: italic;
-    font-size: 0.7em;
-    display: block;
-    margin: -0.05em 0;
-  }
-
-  .heart-tap-hint {
-    font-family: "Cormorant Garamond", serif;
-    font-style: italic;
-    font-size: clamp(0.75rem, 1.8vw, 0.9rem);
-    color: rgba(201,168,76,0.7);
-    letter-spacing: 0.1em;
-    margin-top: 1.5rem;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
-
-  .heart-screen-content .tap-btn {
-    animation: fadeUp 1s ease 0.5s both;
-  }
-
+  .heart-content-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: auto; z-index: 2; width: 90%; }
+  .heart-names { font-family: "Cinzel", serif; font-size: clamp(1.2rem, 4vw, 1.8rem); font-weight: 400; color: rgba(201,168,76,0.95); letter-spacing: 0.05em; line-height: 1.2; }
+  .heart-amp { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 0.7em; display: block; margin: -0.05em 0; }
+  .heart-tap-hint { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: clamp(0.75rem, 1.8vw, 0.9rem); color: rgba(201,168,76,0.7); letter-spacing: 0.1em; margin-top: 1.5rem; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+  .heart-screen-content .tap-btn { animation: fadeUp 1s ease 0.5s both; }
 </style>
 </head>
 <body>
@@ -1034,12 +1013,9 @@
     <source src="0312.mp4" type="video/mp4">
   </video>
   <div class="video-overlay"></div>
-
   <div class="tap-btn-wrap">
     <button class="tap-btn" id="tapBtn">
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
+      <div class="tap-ring"></div><div class="tap-ring"></div><div class="tap-ring"></div>
       ✦ &nbsp;Open Envelope
     </button>
   </div>
@@ -1055,21 +1031,12 @@
         </svg>
         <div class="heart-content-text">
           <div class="heart-names">
-            Chamith
-            <span class="heart-amp">&</span>
-            Vihanga
+            Chamith<span class="heart-amp">&</span>Vihanga
           </div>
         </div>
       </div>
       <div class="heart-tap-hint">Tap the heart to open</div>
     </div>
-<!-- 
-    <button class="tap-btn" id="tapBtn2">
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
-      <div class="tap-ring"></div>
-      ✦ &nbsp;Open Envelope
-    </button> -->
   </div>
 </div>
 
@@ -1079,11 +1046,8 @@
     <source src="0312.mp4" type="video/mp4">
   </video>
   <div class="envelope-overlay"></div>
-
   <div class="envelope-content">
-    <button class="envelope-open-btn" id="openEnvelopeBtn">
-      ✦ &nbsp;Open Envelope
-    </button>
+    <button class="envelope-open-btn" id="openEnvelopeBtn">✦ &nbsp;Open Envelope</button>
   </div>
 </div>
 
@@ -1125,11 +1089,9 @@
       <img class="inv-logo" src="logoCV-removebg-preview.png" alt="Chamith and Vihanga logo" />
       <p class="inv-tag">Together with their families</p>
       <p class="inv-together">invite you to celebrate the marriage of</p>
-    </br>
+      <br>
       <div class="inv-names">
-        Chamith
-        <span class="ampersand">&</span>
-        Vihanga
+        Chamith<span class="ampersand">&</span>Vihanga
       </div>
       <div class="ornament-line"><hr><span>✦</span><hr></div>
       <p class="inv-request">
@@ -1151,6 +1113,8 @@
           onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform?usp=dialog','_blank');">
           RSVP Now
         </button>
+      </br>
+        <p class="rsvp-note">(Regrets Only)</p>
       </div>
 
       <div class="getting-married-section">
@@ -1167,14 +1131,7 @@
         <div class="ornament-line"><hr><span>✦</span><hr></div>
         <p class="section-label">Invitation</p>
         <div class="video-frame">
-          <video
-            id="story-video"
-            src="vedio.mp4"
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            preload="auto"
+          <video id="story-video" src="vedio.mp4" muted loop playsinline webkit-playsinline preload="auto"
             style="width:100%;height:auto;display:block;max-height:580px;object-fit:cover;-webkit-user-select:none;user-select:none;">
           </video>
         </div>
@@ -1194,6 +1151,155 @@
         </div>
       </section>
 
+      <!-- ===== EVENT SCHEDULE SECTION ===== -->
+      <section class="schedule-section" id="schedule-section">
+        <div class="ornament-line"><hr><span>✦</span><hr></div>
+        <p class="gm-label">Join Us For</p>
+        <h2 class="gm-heading">Event Schedule</h2>
+        <p class="schedule-subtitle">
+          Thursday, 07 May 2026 &nbsp;·&nbsp; Thurya Hotel, Kalutara<br>
+          Here's how we'll celebrate together
+        </p>
+
+        <div class="ev-timeline" id="ev-timeline">
+
+          <div class="ev-row" data-delay="0">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">🪷</span>
+                  <span class="ev-badge-num">01</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="01">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 1</span>
+              </div>
+              <div class="ev-name">Poruwa Ceremony</div>
+              <p class="ev-desc">The traditional sacred union — our hearts joined under the poruwa, blessed by family and elders in time-honoured Sri Lankan tradition.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="130">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">📜</span>
+                  <span class="ev-badge-num">02</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="02">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 2</span>
+              </div>
+              <div class="ev-name">Registration</div>
+              <p class="ev-desc">The official signing of our vows and legal registration — witnessed by those we love most as we become husband and wife.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="260">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">🎂</span>
+                  <span class="ev-badge-num">03</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="03">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 3</span>
+              </div>
+              <div class="ev-name">Cake Cutting</div>
+              <p class="ev-desc">A sweet milestone — together we cut the wedding cake, a symbol of the life we are about to share, surrounded by cheers and joy.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="390">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">📸</span>
+                  <span class="ev-badge-num">04</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="04">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 4</span>
+              </div>
+              <div class="ev-name">Photo Session</div>
+              <p class="ev-desc">Capturing forever memories — group portraits, candid moments and cherished photographs with family and friends we hold dear.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="520">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">🍽️</span>
+                  <span class="ev-badge-num">05</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="05">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 5</span>
+              </div>
+              <div class="ev-name">Lunch Time</div>
+              <p class="ev-desc">A lavish celebration feast — enjoy a sumptuous lunch as we gather, dine and share stories and laughter over a beautifully curated spread.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="650">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">💃</span>
+                  <span class="ev-badge-num">06</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="06">
+              <div class="ev-header">
+                <span class="ev-step-label">Step 6</span>
+              </div>
+              <div class="ev-name">Dancing Time</div>
+              <p class="ev-desc">Let the music move you — hit the dance floor as we celebrate with joy, rhythm and unforgettable moments that will last a lifetime.</p>
+            </div>
+          </div>
+
+          <div class="ev-row" data-delay="780">
+            <div class="ev-spine">
+              <div class="ev-badge">
+                <div class="ev-badge-inner">
+                  <span class="ev-badge-icon">✨</span>
+                  <span class="ev-badge-num">07</span>
+                </div>
+              </div>
+              <div class="ev-line"></div>
+            </div>
+            <div class="ev-card" data-num="07">
+              <div class="ev-header">
+                <span class="ev-step-label">Farewell</span>
+              </div>
+              <div class="ev-name">Going Away</div>
+              <p class="ev-desc">A magical send-off as Chamith &amp; Vihanga begin their journey together — shower them with love, petals and warm wishes as they depart.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      <!-- ===== END EVENT SCHEDULE ===== -->
+
       <section class="section-block">
         <div class="ornament-line"><hr><span>✦</span><hr></div>
         <p class="gm-label">Way to the</p>
@@ -1201,11 +1307,9 @@
         <h3 class="gm-location-title">Thurya Hotel</h3>
         <h4 class="gm-address" style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:#0f1f3f;margin-bottom:4px;">Grand Ballroom</h4>
         <p class="gm-address">Kudawaskaduwa, Waskaduwa, Kalutara</p>
-        <iframe
-          class="map-embed"
+        <iframe class="map-embed"
           src="https://www.google.com/maps?q=Thurya+Hotel+Kalutara&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Thurya Hotel location map"></iframe>
       </section>
 
@@ -1225,28 +1329,18 @@
   <source src="Romantic-Day-chosic.com_.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ===========================
-     MUSIC WIDGET — FULLY FIXED
-============================ -->
+<!-- ===== MUSIC WIDGET ===== -->
 <div id="music-widget">
-  <!-- Volume panel -->
   <div id="vol-slider-wrap">
     <label>Vol</label>
-    <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.7"
-           aria-label="Volume">
+    <input type="range" id="vol-slider" min="0" max="1" step="0.02" value="0.7" aria-label="Volume">
   </div>
-
-  <!-- Main button -->
   <button id="musicBtn" aria-label="Toggle Music">
     <span class="music-bars paused" id="musicBars">
-      <span style="height:5px"></span>
-      <span style="height:9px"></span>
-      <span style="height:6px"></span>
-      <span style="height:8px"></span>
+      <span style="height:5px"></span><span style="height:9px"></span>
+      <span style="height:6px"></span><span style="height:8px"></span>
     </span>
   </button>
-
-  <!-- Tooltip (desktop only) -->
   <div id="music-tooltip">Play Music</div>
 </div>
 
@@ -1256,14 +1350,9 @@
   function enterSite() {
     document.getElementById('heart-screen').classList.add('hide');
     document.getElementById('envelope-screen').classList.add('show');
-    
-    // Auto-play envelope video
     const envelopeVideo = document.getElementById('envelope-video');
-    if (envelopeVideo) {
-      envelopeVideo.play().catch(() => {
-        // Fallback if autoplay is blocked
-      });
-    }
+    if (envelopeVideo) envelopeVideo.play().catch(() => {});
+    tryPlayMusic();
   }
 
   function openInvitation() {
@@ -1271,65 +1360,38 @@
     const inv = document.getElementById('invitation');
     inv.classList.add('show');
     document.body.classList.add('invitation-open');
-    // Reset scroll position immediately
     inv.scrollTop = 0;
     initParticles();
     tryPlayMusic();
+    initScheduleObserver();
   }
 
   function tryPlayMusic() {
-    const music  = document.getElementById('bgMusic');
-    const btn    = document.getElementById('musicBtn');
-    const barsEl = document.getElementById('musicBars');
-    const tip    = document.getElementById('music-tooltip');
-
+    const music = document.getElementById('bgMusic');
+    const btn   = document.getElementById('musicBtn');
+    const bars  = document.getElementById('musicBars');
+    const tip   = document.getElementById('music-tooltip');
     music.volume = +document.getElementById('vol-slider').value;
     music.play().then(() => {
       btn.classList.add('playing');
-      barsEl.classList.remove('paused');
+      bars.classList.remove('paused');
       if (tip) tip.textContent = 'Pause Music';
-    }).catch(() => {
-      /* Autoplay blocked — user must tap music button manually */
-    });
+    }).catch(() => {});
   }
 
-  /* ── HEART BUTTON AND BUTTONS ── */
-  const heartBtn = document.getElementById('heartBtn');
-  const tapBtn2 = document.getElementById('tapBtn2');
-  const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
-  let entered = false;
-
-  function attachEventListeners(element, callback) {
-    if (!element) return;
-    element.addEventListener('click', callback);
-    element.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      callback(e);
-    }, { passive: false });
+  /* ── BUTTONS ── */
+  function attachEventListeners(el, cb) {
+    if (!el) return;
+    el.addEventListener('click', cb);
+    el.addEventListener('touchend', (e) => { e.preventDefault(); cb(e); }, { passive: false });
     if ('PointerEvent' in window) {
-      element.addEventListener('pointerdown', function(e) {
-        if (e.isPrimary) {
-          e.preventDefault();
-          callback(e);
-        }
-      }, { passive: false });
+      el.addEventListener('pointerdown', function(e) { if (e.isPrimary) { e.preventDefault(); cb(e); } }, { passive: false });
     }
   }
 
-  attachEventListeners(heartBtn, (e) => {
-    e.preventDefault();
-    enterSite();
-  });
-
-  attachEventListeners(tapBtn2, (e) => {
-    e.preventDefault();
-    enterSite();
-  });
-
-  attachEventListeners(openEnvelopeBtn, (e) => {
-    e.preventDefault();
-    openInvitation();
-  });
+  attachEventListeners(document.getElementById('heartBtn'),       (e) => { e.preventDefault(); enterSite(); });
+  attachEventListeners(document.getElementById('tapBtn2'),        (e) => { e.preventDefault(); enterSite(); });
+  attachEventListeners(document.getElementById('openEnvelopeBtn'),(e) => { e.preventDefault(); openInvitation(); });
 
   /* ── PARTICLES ── */
   function initParticles() {
@@ -1362,9 +1424,57 @@
       document.getElementById("minutes").textContent = Math.floor((distance % 3600000) / 60000);
       document.getElementById("seconds").textContent = Math.floor((distance % 60000) / 1000);
     }
-    tick();
-    setInterval(tick, 1000);
+    tick(); setInterval(tick, 1000);
   })();
+
+  /* ── SCHEDULE SCROLL ANIMATIONS ── */
+  function initScheduleObserver() {
+    const rows = document.querySelectorAll('.ev-row');
+    if (!rows.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      rows.forEach(r => r.classList.add('animate-in'));
+      return;
+    }
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const row = entry.target;
+          const delay = parseInt(row.dataset.delay || 0);
+          setTimeout(() => {
+            row.classList.add('animate-in');
+            const badge = row.querySelector('.ev-badge');
+            if (badge) spawnSparkles(badge);
+          }, delay);
+          obs.unobserve(row);
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+
+    rows.forEach(r => obs.observe(r));
+  }
+
+  /* ── SPARKLE BURST ── */
+  function spawnSparkles(target) {
+    const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+    angles.forEach((angle, i) => {
+      const s = document.createElement('div');
+      s.className = 'ev-sparkle';
+      const rad = angle * Math.PI / 180;
+      const dist = 24 + Math.random() * 12;
+      s.style.cssText = [
+        `position:absolute`,
+        `left:calc(50% + ${Math.cos(rad)*dist}px)`,
+        `top:calc(50% + ${Math.sin(rad)*dist}px)`,
+        `animation-delay:${i*0.04}s`,
+        `z-index:10`
+      ].join(';');
+      target.style.position = 'relative';
+      target.appendChild(s);
+      setTimeout(() => s.remove(), 1000);
+    });
+  }
 
   /* ── MUSIC BUTTON ── */
   const bgMusic   = document.getElementById('bgMusic');
@@ -1373,8 +1483,7 @@
   const tooltip   = document.getElementById('music-tooltip');
   const volSlider = document.getElementById('vol-slider');
   const volWrap   = document.getElementById('vol-slider-wrap');
-
-  bgMusic.volume = 0.7;
+  bgMusic.volume  = 0.7;
 
   function toggleMusic(e) {
     e.preventDefault();
@@ -1394,52 +1503,33 @@
 
   musicBtn.addEventListener('click', toggleMusic);
   musicBtn.addEventListener('touchend', function(e) {
-    // Only prevent default if this is a direct toggle, not scroll interference
     if (e.target === musicBtn || e.target.closest('#musicBtn')) {
       e.preventDefault();
-      // Only trigger if not a long-press (volume panel)
       if (!longPressing) toggleMusic(e);
       longPressing = false;
       clearTimeout(longPressTimer);
     }
   }, { passive: false });
 
-  volSlider.addEventListener('input', () => {
-    bgMusic.volume = +volSlider.value;
-  });
+  volSlider.addEventListener('input', () => { bgMusic.volume = +volSlider.value; });
 
-  /* Long-press on mobile to show volume panel */
-  let longPressTimer;
-  let longPressing = false;
+  let longPressTimer, longPressing = false;
   musicBtn.addEventListener('touchstart', function(e) {
-    // Don't start long-press timer if touch is not directly on button
     if (e.target.closest('#musicBtn')) {
-      longPressTimer = setTimeout(() => {
-        longPressing = true;
-        volWrap.classList.add('visible');
-      }, 500);
+      longPressTimer = setTimeout(() => { longPressing = true; volWrap.classList.add('visible'); }, 500);
     }
   }, { passive: true });
   musicBtn.addEventListener('touchend', function() {
     clearTimeout(longPressTimer);
-    // Hide vol panel after 3s if shown
-    if (longPressing) {
-      setTimeout(() => { volWrap.classList.remove('visible'); }, 3000);
-    }
+    if (longPressing) setTimeout(() => { volWrap.classList.remove('visible'); }, 3000);
   }, { passive: true });
-  musicBtn.addEventListener('touchcancel', function() {
-    clearTimeout(longPressTimer);
-    longPressing = false;
-  }, { passive: true });
+  musicBtn.addEventListener('touchcancel', function() { clearTimeout(longPressTimer); longPressing = false; }, { passive: true });
 
-  /* ── STORY VIDEO: play when visible ── */
+  /* ── STORY VIDEO ── */
   const storyVideo = document.getElementById('story-video');
   if (storyVideo && 'IntersectionObserver' in window) {
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) { storyVideo.play(); }
-        else { storyVideo.pause(); }
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) storyVideo.play(); else storyVideo.pause(); });
     }, { threshold: 0.4 });
     obs.observe(storyVideo);
   }
@@ -1448,17 +1538,17 @@
   const rsvpBtn = document.getElementById('rsvpBtn');
   if (rsvpBtn) {
     rsvpBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform','_blank');
     }, false);
   }
 
-  /* ── PASSIVE SCROLL SUPPORT ── */
-  // Critical: Add passive listener to allow iOS momentum scroll
-  document.addEventListener('touchmove', function() {
-    // Empty handler with passive:true allows iOS to optimize scroll
-  }, { passive: true });
+  document.addEventListener('touchmove', function() {}, { passive: true });
+
+  /* ── AUTO PLAY MUSIC ON HEART PAGE ── */
+  window.addEventListener('load', function() {
+    tryPlayMusic();
+  });
 })();
 </script>
 </body>
