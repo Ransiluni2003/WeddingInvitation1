@@ -989,7 +989,16 @@
   }
   .heart-svg { width: 100%; height: 100%; filter: drop-shadow(0 8px 32px rgba(201,168,76,0.3)); transition: filter 0.3s ease; }
   .heart-container:hover .heart-svg { filter: drop-shadow(0 12px 48px rgba(201,168,76,0.6)); }
-  .heart-path { stroke: rgba(201,168,76,0.9); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: drawHeart 3s ease-in-out infinite; }
+  .heart-path { 
+    stroke: rgba(201,168,76,0.9); 
+    fill: none; 
+    stroke-width: 2; 
+    stroke-linecap: round; 
+    stroke-linejoin: round; 
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: drawHeart 3s ease-in-out infinite; 
+  }
   @keyframes drawHeart {
     0%   { stroke-dasharray: 1200; stroke-dashoffset: 1200; opacity: 0; }
     10%  { opacity: 1; }
@@ -1372,11 +1381,19 @@
     const bars  = document.getElementById('musicBars');
     const tip   = document.getElementById('music-tooltip');
     music.volume = +document.getElementById('vol-slider').value;
+    music.muted = false;
     music.play().then(() => {
       btn.classList.add('playing');
       bars.classList.remove('paused');
       if (tip) tip.textContent = 'Pause Music';
     }).catch(() => {});
+  }
+
+  function startMutedMusic() {
+    const music = document.getElementById('bgMusic');
+    music.volume = +document.getElementById('vol-slider').value;
+    music.muted = true;
+    music.play().catch(() => {});
   }
 
   /* ── BUTTONS ── */
@@ -1545,9 +1562,16 @@
 
   document.addEventListener('touchmove', function() {}, { passive: true });
 
-  /* ── AUTO PLAY MUSIC ON HEART PAGE ── */
+  /* ── AUTO PLAY MUSIC ON HEART PAGE LOAD ── */
   window.addEventListener('load', function() {
-    tryPlayMusic();
+    const music = document.getElementById('bgMusic');
+    music.volume = +document.getElementById('vol-slider').value;
+    music.muted = true;
+    music.play().then(() => {
+      setTimeout(() => {
+        music.muted = false;
+      }, 100);
+    }).catch(() => {});
   });
 })();
 </script>
