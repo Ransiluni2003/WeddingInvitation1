@@ -1562,17 +1562,31 @@
 
   document.addEventListener('touchmove', function() {}, { passive: true });
 
-  /* ── AUTO PLAY MUSIC ON HEART PAGE LOAD ── */
-  window.addEventListener('load', function() {
+  /* ── START MUSIC ON FIRST USER INTERACTION (MOBILE COMPATIBLE) ── */
+  let musicStarted = false;
+  function initMusicOnInteraction() {
+    if (musicStarted) return;
+    musicStarted = true;
+    
     const music = document.getElementById('bgMusic');
+    const btn   = document.getElementById('musicBtn');
+    const bars  = document.getElementById('musicBars');
+    const tip   = document.getElementById('music-tooltip');
+    
     music.volume = +document.getElementById('vol-slider').value;
-    music.muted = true;
+    music.muted = false;
     music.play().then(() => {
-      setTimeout(() => {
-        music.muted = false;
-      }, 100);
+      btn.classList.add('playing');
+      bars.classList.remove('paused');
+      if (tip) tip.textContent = 'Pause Music';
     }).catch(() => {});
-  });
+    
+    document.removeEventListener('touchstart', initMusicOnInteraction);
+    document.removeEventListener('click', initMusicOnInteraction);
+  }
+  
+  document.addEventListener('touchstart', initMusicOnInteraction, { passive: true });
+  document.addEventListener('click', initMusicOnInteraction, { passive: true });
 })();
 </script>
 </body>
