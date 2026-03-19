@@ -613,11 +613,11 @@
   }
 
   /* ===========================
-     EVENT SCHEDULE — REDESIGNED
+     NEW ALTERNATING TIMELINE SCHEDULE
   =========================== */
   .schedule-section {
     width: 100%;
-    max-width: 580px;
+    max-width: 600px;
     text-align: center;
     margin-top: 2.5rem;
   }
@@ -632,217 +632,199 @@
     line-height: 1.6;
   }
 
-  /* Outer wrapper — vertical gold line runs through left column */
-  .ev-timeline {
+  /* Vertical center line */
+  .new-timeline {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 0;
-    margin-top: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+  }
+  .new-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, #6b4c2a 8%, #6b4c2a 92%, transparent);
+    transform: translateX(-50%);
   }
 
-  /* Single event row */
-  .ev-row {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 0 16px;
-    align-items: stretch;
-    opacity: 0;
-    transform: translateX(-28px);
-    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
-  }
-  .ev-row.animate-in {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* ── Left column: number badge + vertical line ── */
-  .ev-spine {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-
-  /* Numbered badge */
-  .ev-badge {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #1a3a6b 0%, #4A90E2 100%);
-    border: 2px solid #D4AF37;
-    box-shadow: 0 0 0 4px rgba(212,175,55,0.15), 0 6px 20px rgba(26,58,107,0.35);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+  /* Top and bottom diamond gems on the line */
+  .timeline-gem {
+    text-align: center;
+    color: #6b4c2a;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    line-height: 1;
     position: relative;
     z-index: 2;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .ev-row:hover .ev-badge {
-    transform: scale(1.1);
-    box-shadow: 0 0 0 6px rgba(212,175,55,0.25), 0 8px 24px rgba(26,58,107,0.45);
-  }
-  .ev-badge-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1;
-    gap: 1px;
-  }
-  .ev-badge-icon {
-    font-size: 17px;
-    line-height: 1;
-  }
-  .ev-badge-num {
-    font-family: "Cinzel", serif;
-    font-size: 8px;
-    color: rgba(255,255,255,0.7);
-    letter-spacing: 0.05em;
-  }
-
-  /* Gold pulse ring on badge */
-  .ev-badge::after {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(212,175,55,0.55);
-    opacity: 0;
-    animation: evRing 3.5s ease-out infinite;
-  }
-  @keyframes evRing {
-    0%   { transform: scale(0.85); opacity: 0.8; }
-    100% { transform: scale(1.55); opacity: 0; }
-  }
-
-  /* Vertical connector line */
-  .ev-line {
-    flex: 1;
-    width: 1px;
-    background: linear-gradient(to bottom, rgba(212,175,55,0.55), rgba(212,175,55,0.15));
-    margin: 4px 0;
-    min-height: 20px;
-  }
-  .ev-row:last-child .ev-line { display: none; }
-
-  /* ── Right column: the event card ── */
-  .ev-card {
-    background: rgba(255,255,255,0.78);
-    border: 1px solid rgba(212,175,55,0.22);
-    border-radius: 12px;
-    padding: 16px 20px 20px;
-    margin-bottom: 14px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 16px rgba(26,58,107,0.06);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    text-align: left;
-  }
-  .ev-card:hover {
-    transform: translateX(4px);
-    box-shadow: 0 6px 28px rgba(212,175,55,0.16), 0 2px 8px rgba(26,58,107,0.08);
-    border-color: rgba(212,175,55,0.5);
-  }
-
-  /* Decorative left accent bar */
-  .ev-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 16%; bottom: 16%;
-    width: 3px;
-    background: linear-gradient(to bottom, transparent, #D4AF37, transparent);
-    border-radius: 0 2px 2px 0;
-    opacity: 0.7;
-  }
-
-  /* Subtle background watermark number */
-  .ev-card::after {
-    content: attr(data-num);
-    position: absolute;
-    right: 14px; top: 50%;
-    transform: translateY(-50%);
-    font-family: "Cinzel", serif;
-    font-size: 3.5rem;
-    font-weight: 500;
-    color: rgba(26,58,107,0.04);
-    line-height: 1;
-    pointer-events: none;
+    margin: 0;
     user-select: none;
   }
 
-  .ev-header {
+  /* Each event row */
+  .new-ev-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
+    margin-bottom: 2.8rem;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.22,1,0.36,1);
   }
+  .new-ev-item.ev-left  { flex-direction: row; transform: translateX(-28px); }
+  .new-ev-item.ev-right { flex-direction: row-reverse; transform: translateX(28px); }
+  .new-ev-item.ev-visible { opacity: 1; transform: translateX(0); }
 
-  .ev-step-label {
-    font-family: "Lato", sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #D4AF37;
-    background: rgba(212,175,55,0.1);
-    border: 1px solid rgba(212,175,55,0.3);
-    border-radius: 20px;
-    padding: 2px 10px;
-    white-space: nowrap;
+  /* Label side */
+  .new-ev-label {
+    flex: 1;
+    padding-right: 30px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
-
-  .ev-name {
+  .new-ev-item.ev-right .new-ev-label {
+    text-align: left;
+    align-items: flex-start;
+    padding-right: 0;
+    padding-left: 30px;
+  }
+  .new-ev-name {
     font-family: "Cinzel", serif;
-    font-size: clamp(0.82rem, 2vw, 0.98rem);
-    font-weight: 500;
+    font-size: clamp(0.82rem, 2.2vw, 1rem);
+    font-weight: 400;
     color: #1a3a6b;
-    letter-spacing: 0.06em;
-    line-height: 1.3;
-    margin-bottom: 5px;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
   }
 
-  .ev-desc {
-    font-family: "Cormorant Garamond", serif;
-    font-style: italic;
-    font-size: clamp(0.88rem, 2vw, 1rem);
-    color: #0f1f3f;
-    opacity: 0.72;
-    line-height: 1.55;
-    margin: 0;
-  }
-
-  /* Sparkle animation */
-  @keyframes evSparkle {
-    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
-    100% { transform: scale(1.6) rotate(200deg); opacity: 0; }
-  }
-  .ev-sparkle {
+  /* Center dot */
+  .new-ev-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #6b4c2a;
+    border: 2.5px solid #f6fbf4;
+    box-shadow: 0 0 0 1.5px #6b4c2a;
+    flex-shrink: 0;
     position: absolute;
-    width: 7px; height: 7px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    z-index: 3;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s;
+  }
+  .new-ev-item.ev-visible .new-ev-dot {
+    transform: translateX(-50%) scale(1);
+  }
+
+  /* Image side */
+  .new-ev-img {
+    flex: 1;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .new-ev-item.ev-right .new-ev-img {
+    justify-content: flex-end;
+    padding-left: 0;
+    padding-right: 30px;
+  }
+
+  .new-ev-img-box {
+    width: clamp(75px, 17vw, 115px);
+    height: clamp(75px, 17vw, 115px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Actual images */
+  .new-ev-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: sepia(0.55) hue-rotate(-5deg) brightness(0.82) contrast(1.05);
+    transition: filter 0.35s ease, transform 0.35s ease;
+    display: block;
+  }
+  .new-ev-item:hover .new-ev-img-box img {
+    filter: sepia(0.25) hue-rotate(-5deg) brightness(0.95) contrast(1.05);
+    transform: scale(1.06);
+  }
+
+  /* Fallback SVG icons */
+  .new-ev-img-box svg {
+    width: 88%;
+    height: 88%;
+    stroke: #6b4c2a;
+    fill: none;
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.35s ease;
+  }
+  .new-ev-item:hover .new-ev-img-box svg {
+    transform: scale(1.07);
+  }
+
+  /* Hover shimmer ring on image */
+  .new-ev-img-box::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid rgba(107,76,42,0);
+    transition: border-color 0.35s;
+    pointer-events: none;
+  }
+  .new-ev-item:hover .new-ev-img-box::after {
+    border-color: rgba(107,76,42,0.3);
+  }
+
+  /* Sparkle burst on scroll-in */
+  @keyframes newSparkle {
+    0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+    100% { transform: scale(1.8) rotate(200deg); opacity: 0; }
+  }
+  .ev-sparkle-dot {
+    position: absolute;
+    width: 6px; height: 6px;
     background: #D4AF37;
     clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
-    animation: evSparkle 0.75s ease both;
+    animation: newSparkle 0.7s ease both;
     pointer-events: none;
     z-index: 10;
   }
 
-  /* Line-draw animation for the vertical line on scroll in */
-  @keyframes lineGrow {
-    from { transform: scaleY(0); transform-origin: top; }
-    to   { transform: scaleY(1); transform-origin: top; }
+  /* Floating animation for images after appearing */
+  @keyframes floatImg {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-4px); }
   }
-  .ev-row.animate-in .ev-line {
-    animation: lineGrow 0.5s ease 0.3s both;
+  .new-ev-item.ev-visible .new-ev-img-box img,
+  .new-ev-item.ev-visible .new-ev-img-box svg {
+    animation: floatImg 4s ease-in-out infinite;
+  }
+  .new-ev-item:nth-child(odd).ev-visible .new-ev-img-box img,
+  .new-ev-item:nth-child(odd).ev-visible .new-ev-img-box svg {
+    animation-delay: 0.5s;
+  }
+  /* Pause float on hover */
+  .new-ev-item:hover .new-ev-img-box img,
+  .new-ev-item:hover .new-ev-img-box svg {
+    animation-play-state: paused;
   }
 
   @media (max-width: 480px) {
-    .ev-timeline { gap: 0; }
-    .ev-card { padding: 14px 16px 16px; }
-    .ev-badge { width: 40px; height: 40px; }
-    .ev-badge-icon { font-size: 15px; }
-    .ev-row { grid-template-columns: 48px 1fr; gap: 0 12px; }
+    .new-ev-label { padding-right: 16px; }
+    .new-ev-item.ev-right .new-ev-label { padding-left: 16px; }
+    .new-ev-img { padding-left: 16px; }
+    .new-ev-item.ev-right .new-ev-img { padding-right: 16px; }
+    .new-ev-name { font-size: 0.8rem; }
   }
 
   /* ===========================
@@ -990,15 +972,15 @@
   }
   .heart-svg { width: 100%; height: 100%; filter: drop-shadow(0 8px 32px rgba(201,168,76,0.3)); transition: filter 0.3s ease; }
   .heart-container:hover .heart-svg { filter: drop-shadow(0 12px 48px rgba(201,168,76,0.6)); }
-  .heart-path { 
-    stroke: rgba(201,168,76,0.9); 
-    fill: none; 
-    stroke-width: 2; 
-    stroke-linecap: round; 
-    stroke-linejoin: round; 
+  .heart-path {
+    stroke: rgba(201,168,76,0.9);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     stroke-dasharray: 1200;
     stroke-dashoffset: 1200;
-    animation: drawHeart 3s ease-in-out infinite; 
+    animation: drawHeart 3s ease-in-out infinite;
   }
   @keyframes drawHeart {
     0%   { stroke-dasharray: 1200; stroke-dashoffset: 1200; opacity: 0; }
@@ -1161,154 +1143,199 @@
         </div>
       </section>
 
-      <!-- ===== EVENT SCHEDULE SECTION ===== -->
+      <!-- ===== NEW ALTERNATING TIMELINE SCHEDULE ===== -->
       <section class="schedule-section" id="schedule-section">
         <div class="ornament-line"><hr><span>✦</span><hr></div>
-        <p class="gm-label">Join Us For</p>
-        <h2 class="gm-heading">Event Schedule</h2>
+        <p class="gm-label">Our Celebrations</p>
+        <h2 class="gm-heading">Schedule Events</h2>
         <p class="schedule-subtitle">
-          Thursday, 07 May 2026 &nbsp;·&nbsp; Thurya Hotel, Kalutara<br>
-          Here's how we'll celebrate together
+          Thursday, 07 May 2026 &nbsp;·&nbsp; Thurya Hotel, Kalutara
         </p>
 
-        <div class="ev-timeline" id="ev-timeline">
+        <ul class="new-timeline" id="new-timeline">
 
-          <div class="ev-row" data-delay="0">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">🪷</span>
-                  <span class="ev-badge-num">01</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
-            </div>
-            <div class="ev-card" data-num="01">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 1</span>
-              </div>
-              <div class="ev-name">Poruwa Ceremony</div>
-              <p class="ev-desc">The traditional sacred union — our hearts joined under the poruwa, blessed by family and elders in time-honoured Sri Lankan tradition.</p>
-            </div>
-          </div>
+          <li class="timeline-gem">◆ · · ◆ · · ◆</li>
 
-          <div class="ev-row" data-delay="130">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">📜</span>
-                  <span class="ev-badge-num">02</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 1: Poruwa Ceremony — label LEFT, image RIGHT -->
+          <li class="new-ev-item ev-left" data-delay="0">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Poruwa<br>Ceremony</div>
             </div>
-            <div class="ev-card" data-num="02">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 2</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <!--
+                  REPLACE src="image1.jpg" with your actual image filename.
+                  If the image file is missing, a hand-drawn SVG icon shows instead.
+                -->
+                <img src="image1a.png" alt="Poruwa Ceremony"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <!-- Poruwa arch with drapes -->
+                  <path d="M20 90 L20 40 Q50 10 80 40 L80 90"/>
+                  <line x1="20" y1="90" x2="80" y2="90"/>
+                  <path d="M20 40 Q28 56 24 68"/>
+                  <path d="M80 40 Q72 56 76 68"/>
+                  <path d="M33 36 Q50 24 67 36"/>
+                  <circle cx="20" cy="40" r="3.5"/><circle cx="80" cy="40" r="3.5"/>
+                  <circle cx="50" cy="14" r="3"/>
+                  <path d="M28 44 Q36 52 32 62 M72 44 Q64 52 68 62"/>
+                </svg>
               </div>
-              <div class="ev-name">Registration</div>
-              <p class="ev-desc">The official signing of our vows and legal registration — witnessed by those we love most as we become husband and wife.</p>
             </div>
-          </div>
+          </li>
 
-          <div class="ev-row" data-delay="260">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">🎂</span>
-                  <span class="ev-badge-num">03</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 2: Registration — label RIGHT, image LEFT -->
+          <li class="new-ev-item ev-right" data-delay="120">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Registration</div>
             </div>
-            <div class="ev-card" data-num="03">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 3</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image2a.png" alt="Registration"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <!-- Two interlocked rings + diamond -->
+                  <circle cx="38" cy="58" r="20" stroke-width="4"/>
+                  <circle cx="62" cy="58" r="20" stroke-width="4"/>
+                  <polygon points="50,12 59,24 50,30 41,24"/>
+                  <line x1="50" y1="30" x2="50" y2="38"/>
+                </svg>
               </div>
-              <div class="ev-name">Cake Cutting</div>
-              <p class="ev-desc">A sweet milestone — together we cut the wedding cake, a symbol of the life we are about to share, surrounded by cheers and joy.</p>
             </div>
-          </div>
+          </li>
 
-          <div class="ev-row" data-delay="390">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">📸</span>
-                  <span class="ev-badge-num">04</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 3: Cake Cutting — label LEFT, image RIGHT -->
+          <li class="new-ev-item ev-left" data-delay="240">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Cake<br>Cutting</div>
             </div>
-            <div class="ev-card" data-num="04">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 4</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image3a.png" alt="Cake Cutting"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <rect x="30" y="65" width="40" height="22" rx="3"/>
+                  <rect x="34" y="48" width="32" height="20" rx="3"/>
+                  <rect x="38" y="34" width="24" height="17" rx="3"/>
+                  <line x1="48" y1="34" x2="48" y2="25"/><ellipse cx="48" cy="23" rx="2" ry="3.5"/>
+                  <line x1="54" y1="34" x2="54" y2="28"/><ellipse cx="54" cy="26" rx="1.8" ry="3"/>
+                  <circle cx="50" cy="56" r="2.5"/><circle cx="40" cy="74" r="2"/><circle cx="60" cy="74" r="2"/>
+                  <path d="M72 28 L68 60 L74 62 L76 28 Z"/>
+                  <line x1="74" y1="28" x2="74" y2="20"/>
+                </svg>
               </div>
-              <div class="ev-name">Photo Session</div>
-              <p class="ev-desc">Capturing forever memories — group portraits, candid moments and cherished photographs with family and friends we hold dear.</p>
             </div>
-          </div>
+          </li>
 
-          <div class="ev-row" data-delay="520">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">🍽️</span>
-                  <span class="ev-badge-num">05</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 4: Taking Photo — label RIGHT, image LEFT -->
+          <li class="new-ev-item ev-right" data-delay="360">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Taking<br>Photo</div>
             </div>
-            <div class="ev-card" data-num="05">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 5</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image4a.png" alt="Taking Photo"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <rect x="18" y="38" width="64" height="42" rx="6"/>
+                  <circle cx="50" cy="59" r="14"/><circle cx="50" cy="59" r="9"/><circle cx="50" cy="59" r="5"/>
+                  <path d="M47 57 Q50 54 53 57 Q56 60 50 64 Q44 60 47 57Z" fill="#6b4c2a" stroke="none"/>
+                  <rect x="36" y="30" width="18" height="10" rx="4"/>
+                  <circle cx="22" cy="43" r="3"/>
+                  <circle cx="50" cy="38" r="2.5"/>
+                </svg>
               </div>
-              <div class="ev-name">Lunch Time</div>
-              <p class="ev-desc">A lavish celebration feast — enjoy a sumptuous lunch as we gather, dine and share stories and laughter over a beautifully curated spread.</p>
             </div>
-          </div>
+          </li>
 
-          <div class="ev-row" data-delay="650">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">💃</span>
-                  <span class="ev-badge-num">06</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 5: Lunch Time — label LEFT, image RIGHT -->
+          <li class="new-ev-item ev-left" data-delay="480">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Lunch<br>Time</div>
             </div>
-            <div class="ev-card" data-num="06">
-              <div class="ev-header">
-                <span class="ev-step-label">Step 6</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image5a.png" alt="Lunch Time"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <circle cx="50" cy="60" r="27"/><circle cx="50" cy="60" r="21"/>
+                  <line x1="34" y1="22" x2="34" y2="44"/>
+                  <line x1="31" y1="22" x2="31" y2="33"/><line x1="34" y1="22" x2="34" y2="33"/><line x1="37" y1="22" x2="37" y2="33"/>
+                  <path d="M31 33 Q34 37 37 33"/>
+                  <line x1="34" y1="37" x2="34" y2="44"/>
+                  <line x1="66" y1="22" x2="66" y2="44"/>
+                  <path d="M62 22 Q68 29 66 37"/>
+                </svg>
               </div>
-              <div class="ev-name">Dancing Time</div>
-              <p class="ev-desc">Let the music move you — hit the dance floor as we celebrate with joy, rhythm and unforgettable moments that will last a lifetime.</p>
             </div>
-          </div>
+          </li>
 
-          <div class="ev-row" data-delay="780">
-            <div class="ev-spine">
-              <div class="ev-badge">
-                <div class="ev-badge-inner">
-                  <span class="ev-badge-icon">✨</span>
-                  <span class="ev-badge-num">07</span>
-                </div>
-              </div>
-              <div class="ev-line"></div>
+          <!-- 6: Dancing Time — label RIGHT, image LEFT -->
+          <li class="new-ev-item ev-right" data-delay="600">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Dancing<br>Time</div>
             </div>
-            <div class="ev-card" data-num="07">
-              <div class="ev-header">
-                <span class="ev-step-label">Farewell</span>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image6a.png" alt="Dancing Time"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <!-- Man -->
+                  <circle cx="36" cy="22" r="7"/>
+                  <path d="M36 29 L34 53 L30 70"/>
+                  <path d="M34 43 L26 50"/>
+                  <path d="M36 29 L56 34"/>
+                  <path d="M30 70 L26 84 M30 70 L36 84"/>
+                  <!-- Woman -->
+                  <circle cx="62" cy="24" r="7"/>
+                  <path d="M62 31 Q62 43 55 56 Q62 60 69 56 Q66 43 62 31Z"/>
+                  <path d="M62 31 L45 36"/>
+                  <path d="M57 80 Q55 70 62 66 Q69 70 67 80"/>
+                </svg>
               </div>
-              <div class="ev-name">Going Away</div>
-              <p class="ev-desc">A magical send-off as Chamith &amp; Vihanga begin their journey together — shower them with love, petals and warm wishes as they depart.</p>
             </div>
-          </div>
+          </li>
 
-        </div>
+          <!-- 7: Going Away — label LEFT, image RIGHT -->
+          <li class="new-ev-item ev-left" data-delay="720">
+            <div class="new-ev-label">
+              <div class="new-ev-name">Going<br>Away</div>
+            </div>
+            <div class="new-ev-dot"></div>
+            <div class="new-ev-img">
+              <div class="new-ev-img-box">
+                <img src="image7a.png" alt="Going Away"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <svg style="display:none" viewBox="0 0 100 100">
+                  <rect x="12" y="52" width="76" height="28" rx="6"/>
+                  <path d="M22 52 Q30 34 45 32 L65 32 Q78 34 84 52"/>
+                  <path d="M28 52 Q32 38 43 36 L57 36 Q68 38 72 52"/>
+                  <line x1="50" y1="36" x2="50" y2="52"/>
+                  <circle cx="28" cy="80" r="10"/><circle cx="28" cy="80" r="5"/>
+                  <circle cx="72" cy="80" r="10"/><circle cx="72" cy="80" r="5"/>
+                  <line x1="76" y1="80" x2="92" y2="88"/>
+                  <rect x="89" y="86" width="6" height="8" rx="1"/>
+                  <rect x="85" y="90" width="5" height="7" rx="1"/>
+                  <path d="M42 32 Q50 26 58 32"/>
+                  <circle cx="50" cy="28" r="2.5"/>
+                  <path d="M16 46 Q18 43 20 46 Q22 49 18 52 Q14 49 16 46Z" fill="#6b4c2a" stroke="none"/>
+                  <path d="M78 44 Q80 41 82 44 Q84 47 80 50 Q76 47 78 44Z" fill="#6b4c2a" stroke="none"/>
+                </svg>
+              </div>
+            </div>
+          </li>
+
+          <li class="timeline-gem">◆ · · ◆ · · ◆</li>
+
+        </ul>
       </section>
-      <!-- ===== END EVENT SCHEDULE ===== -->
+      <!-- ===== END NEW SCHEDULE ===== -->
 
       <section class="section-block">
         <div class="ornament-line"><hr><span>✦</span><hr></div>
@@ -1390,13 +1417,6 @@
     }).catch(() => {});
   }
 
-  function startMutedMusic() {
-    const music = document.getElementById('bgMusic');
-    music.volume = +document.getElementById('vol-slider').value;
-    music.muted = true;
-    music.play().catch(() => {});
-  }
-
   /* ── BUTTONS ── */
   function attachEventListeners(el, cb) {
     if (!el) return;
@@ -1445,52 +1465,53 @@
     tick(); setInterval(tick, 1000);
   })();
 
-  /* ── SCHEDULE SCROLL ANIMATIONS ── */
+  /* ── NEW TIMELINE SCROLL ANIMATIONS ── */
   function initScheduleObserver() {
-    const rows = document.querySelectorAll('.ev-row');
-    if (!rows.length) return;
+    const items = document.querySelectorAll('.new-ev-item');
+    if (!items.length) return;
 
     if (!('IntersectionObserver' in window)) {
-      rows.forEach(r => r.classList.add('animate-in'));
+      items.forEach(r => r.classList.add('ev-visible'));
       return;
     }
 
     const obs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const row = entry.target;
-          const delay = parseInt(row.dataset.delay || 0);
+          const item = entry.target;
+          const delay = parseInt(item.dataset.delay || 0);
           setTimeout(() => {
-            row.classList.add('animate-in');
-            const badge = row.querySelector('.ev-badge');
-            if (badge) spawnSparkles(badge);
+            item.classList.add('ev-visible');
+            // Sparkle burst on the center dot
+            const dot = item.querySelector('.new-ev-dot');
+            if (dot) spawnSparkles(dot);
           }, delay);
-          obs.unobserve(row);
+          obs.unobserve(item);
         }
       });
-    }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+    }, { threshold: 0.25, rootMargin: '0px 0px -20px 0px' });
 
-    rows.forEach(r => obs.observe(r));
+    items.forEach(r => obs.observe(r));
   }
 
   /* ── SPARKLE BURST ── */
   function spawnSparkles(target) {
-    const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+    const angles = [0, 60, 120, 180, 240, 300];
     angles.forEach((angle, i) => {
       const s = document.createElement('div');
-      s.className = 'ev-sparkle';
+      s.className = 'ev-sparkle-dot';
       const rad = angle * Math.PI / 180;
-      const dist = 24 + Math.random() * 12;
+      const dist = 18 + Math.random() * 10;
       s.style.cssText = [
-        `position:absolute`,
+        'position:absolute',
         `left:calc(50% + ${Math.cos(rad)*dist}px)`,
         `top:calc(50% + ${Math.sin(rad)*dist}px)`,
-        `animation-delay:${i*0.04}s`,
-        `z-index:10`
+        `animation-delay:${i*0.05}s`,
+        'z-index:10'
       ].join(';');
       target.style.position = 'relative';
       target.appendChild(s);
-      setTimeout(() => s.remove(), 1000);
+      setTimeout(() => s.remove(), 900);
     });
   }
 
@@ -1563,13 +1584,12 @@
 
   document.addEventListener('touchmove', function() {}, { passive: true });
 
-  /* ── AUTO PLAY MUSIC UNMUTED ON HEART PAGE LOAD ── */
+  /* ── AUTO PLAY MUSIC ON LOAD ── */
   window.addEventListener('load', function() {
     const music = document.getElementById('bgMusic');
     const btn   = document.getElementById('musicBtn');
     const bars  = document.getElementById('musicBars');
     const tip   = document.getElementById('music-tooltip');
-    
     if (music) {
       music.volume = +document.getElementById('vol-slider').value;
       music.muted = false;
