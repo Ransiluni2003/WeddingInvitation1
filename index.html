@@ -466,6 +466,38 @@
   }
   .rsvp-btn:hover, .rsvp-btn:active { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,144,226,0.4); }
 
+  .rsvp-arrow-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .rsvp-arrow {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: #4A90E2;
+    animation: bounceArrow 2s ease-in-out infinite;
+    display: inline-block;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(74,144,226,0.4));
+  }
+
+  @keyframes bounceArrow {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(12px) scale(1.1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 0.7;
+    }
+  }
+
   .getting-married-section {
     margin-top: 3rem;
     width: 100%;
@@ -1098,20 +1130,7 @@
       <div class="inv-date-block">
         <div class="inv-date">Thursday 07 May 2026</div>
       </div>
-      <div class="rsvp-section">
-        <div class="ornament-line"><hr><span>✦</span><hr></div>
-        <p class="rsvp-title">RSVP</p>
-        <p class="rsvp-note">
-          Kindly reply by April 28th, 2026<br>
-          We hope to celebrate with you.
-        </p>
-        <button class="rsvp-btn" id="rsvpBtn"
-          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform?usp=dialog','_blank');">
-          RSVP Now
-        </button>
-      </br>
-        <p class="rsvp-note">(Regrets Only)</p>
-      </div>
+
 
       <div class="getting-married-section">
         <div class="ornament-line"><hr><span>✦</span><hr></div>
@@ -1339,6 +1358,23 @@
 
         </ul>
       </section>
+
+            <div class="rsvp-section">
+        <div class="ornament-line"><hr><span>✦</span><hr></div>
+        <p class="rsvp-title">RSVP</p>
+        <p class="rsvp-note">
+          Kindly reply by April 28th, 2026<br>
+          We hope to celebrate with you.
+        </p>
+        <div class="rsvp-arrow-wrapper">
+          <span class="rsvp-arrow">↓</span>
+        </div>
+        <button class="rsvp-btn" id="rsvpBtn"
+          onclick="event.preventDefault(); event.stopPropagation(); window.open('https://docs.google.com/forms/d/e/1FAIpQLSd13_FD8OMV4lR2Pg3nxUk5WnogaZ_Jq45oASq60Ir6B_UrjA/viewform?usp=dialog','_blank');">
+          RSVP Now
+        </button>
+      </div>
+      
       <!-- ===== END NEW SCHEDULE ===== -->
 
       <section class="section-block">
