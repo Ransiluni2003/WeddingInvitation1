@@ -1174,7 +1174,13 @@
         <p class="schedule-subtitle">
           Thursday, 07 May 2026 &nbsp;·&nbsp; Thurya Hotel, Kalutara
         </p>
-
+<p id="guestNameLine" style="
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.8rem;
+  color: #D4AF37;
+  margin-top: 12px;
+  letter-spacing: 0.05em;
+"></p>
         <ul class="new-timeline" id="new-timeline">
 
           <li class="timeline-gem">◆ · · ◆ · · ◆</li>
@@ -1685,7 +1691,24 @@
       }).catch(() => {});
     }
   });
+
+  /* ── PARSE NAME FROM QUERY PARAMS ── */
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+
+    if (name) {
+      const el = document.getElementById("guestNameLine");
+      if (el) {
+        el.textContent = name;
+      }
+    }
+  })();
 })();
+
+
+
 </script>
+
 </body>
 </html>
